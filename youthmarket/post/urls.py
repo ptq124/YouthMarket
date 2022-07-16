@@ -13,15 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+from post import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('post/', include('post.urls')),
-    path('', include('pwa.urls')),
-    path('chat/', include('chat.urls')),
+    path('', views.index, name="index"),
+    path('iconupload/', views.icon_upload, name="icon_upload"),
+    path('icondetail/<int:icon_id>', views.icon_detail, name="icon_detail"),
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # 이미지 업로드되는 경로명시
