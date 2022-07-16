@@ -1,0 +1,60 @@
+<!-- chat/templates/chat/room.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Room</title>
+</head>
+
+<body>
+    <!-- <span><h6>My Channel Name:</h6><h6 id="my-channel-name"></h6></span><br/> -->
+    <h6>My Channel Name:</h6><input id="my-channel-name"/><br/>
+    <textarea id="chat-log" cols="100" rows="20"></textarea><br/>
+    <input id="chat-message-input" type="text" size="100"/><br/>
+    <input id="chat-message-submit" type="button" value="Send"/>
+</body>
+
+<script>
+    var roomName = {{ room_name_json }};
+
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/chat/' + roomName + '/');
+
+    chatSocket.onmessage = function(e) {
+        console.log('[ko]onmessage/start');
+        var data = JSON.parse(e.data);
+        var message = data['message'];
+        var my_channel_name = data['my_channel_name'];
+        var sender_channel_name = data['sender_channel_name'];
+        console.log('chatSocket.onmsg/my_channel_name: ', my_channel_name);
+        console.log('chatSocket.onmsg/sender_channel_name: ', sender_channel_name);
+        console.log('chatSocket.onmsg/e: ', e);
+        console.log('chatSocket.onmsg/e.data: ', e.data);
+        document.querySelector('#my-channel-name').value = my_channel_name;
+        document.querySelector('#chat-log').value += ('<Sended by: '+sender_channel_name+'>\n'+message + '\n');
+        console.log('[ko]onmessage/end');
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').focus();
+    document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        var messageInputDom = document.querySelector('#chat-message-input');
+        var message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
+        messageInputDom.value = '';
+    };
+</script>
+
+</html>

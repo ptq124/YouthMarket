@@ -46,12 +46,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pwa',
+    'post',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +87,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'youthmarket.wsgi.application'
-
+ASGI_APPLICATION = 'youthmarket.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -130,9 +134,171 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+ICON_72_PATH = 'http://127.0.0.1:8000/media/icons/icon_72x72.png'
+ICON_96_PATH = 'http://127.0.0.1:8000/media/icons/icon_96x96.png'
+ICON_128_PATH = 'http://127.0.0.1:8000/media/icons/icon_128x128.png'
+ICON_144_PATH = 'http://127.0.0.1:8000/media/icons/icon_144x144.png'
+# ICON_144_PATH = os.path.join(BASE_DIR, 'static\images\icons', 'icon-144x144.png')
+# ICON_144_PATH = os.path.join('C:\\Users\\kyung\\Desktop\\test3\\youthmarket\\static\\images\\icons', 'icon-144x144.png')
+
+ICON_152_PATH = 'http://127.0.0.1:8000/media/icons/icon_152x152.png'
+ICON_192_PATH = 'http://127.0.0.1:8000/media/icons/icon_192x192.png'
+ICON_384_PATH = 'http://127.0.0.1:8000/media/icons/icon_384x384.png'
+ICON_512_PATH = 'http://127.0.0.1:8000/media/icons/icon_512x512.png'
+# ICON_512_PATH = os.path.join(BASE_DIR, 'static\images\icons', 'icon-512x512.png')
+ICON_PATH = 'http://127.0.0.1:8000/media/icons/icon.PNG'
+PWA_APP_NAME = 'youthmarket'
+PWA_APP_DESCRIPTION = "youthmarket"
+PWA_APP_THEME_COLOR = '#000000'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+# PWA_APP_PREFER_RELATED_APPLICATIONS = True # https://web.dev/i18n/ko/installable-manifest/
+PWA_APP_ICONS = [
+	{
+		'src': ICON_72_PATH,
+		'sizes': '72x72',
+        'type': 'image/png',
+        # 'purpose': 'any maskable'
+	},
+    {
+		'src': ICON_96_PATH,
+		'sizes': '96x96',
+        'type': 'image/png',
+        # 'purpose': 'any maskable'
+	},
+    {
+		'src': ICON_128_PATH,
+		'sizes': '128x128',
+        'type': 'image/png',
+        # 'purpose': 'any maskable'
+	},
+    {
+		'src': ICON_144_PATH,
+        # 'src': "C:\\Users\\kyung\\Desktop\\test3\\youthmarket\\static\\images\\icons\\icon-144x144.png",
+		'sizes': '144x144',
+        'type': 'image/png',
+        # 'purpose': 'any maskable'
+        'purpose': 'maskable'
+	},
+    {
+		'src': ICON_152_PATH,
+		'sizes': '152x152',
+        'type': 'image/png'
+        # 'purpose': 'any maskable'
+	},
+    {
+		'src': ICON_128_PATH,
+		'sizes': '192x192',
+        'type': 'image/png'
+        # 'purpose': 'any maskable'
+	},
+    {
+		'src': ICON_192_PATH,
+		'sizes': '192x192',
+        'type': 'image/png'
+        # 'purpose': 'any maskable'
+	},
+    {
+		'src': ICON_384_PATH,
+		'sizes': '384x384',
+        'type': 'image/png'
+        # 'purpose': 'any maskable'
+	},
+    {
+		'src': ICON_512_PATH,
+		'sizes': '512x512',
+        'type': 'image/png',
+        'purpose': 'maskable'
+	}
+
+]
+PWA_APP_ICONS_APPLE = [
+	{
+		'src': ICON_72_PATH,
+		'sizes': '72x72',
+        'type': 'image/png'
+        # 'purpose': 'any maskable'
+	},
+    {
+		'src': ICON_96_PATH,
+		'sizes': '96x96',
+        'type': 'image/png'
+        # 'purpose': 'any maskable'
+	},
+    {
+		'src': ICON_128_PATH,
+		'sizes': '128x128',
+        'type': 'image/png'
+        # 'purpose': 'any maskable'
+	},
+    {
+		'src': ICON_144_PATH,
+        # 'src': "C:\\Users\\kyung\\Desktop\\test3\\youthmarket\\static\\images\\icons\\icon-144x144.png",
+		'sizes': '144x144',
+        'type': 'image/png',
+        # 'purpose': 'any maskable'
+        'purpose': 'maskable'
+	},
+    {
+		'src': ICON_152_PATH,
+		'sizes': '152x152',
+        'type': 'image/png'
+	},
+    {
+		'src': ICON_192_PATH,
+		'sizes': '192x192',
+        'type': 'image/png'
+	},
+    {
+		'src': ICON_384_PATH,
+		'sizes': '384x384',
+        'type': 'image/png'
+	},
+    {
+		'src': ICON_512_PATH,
+		'sizes': '512x512',
+        'type': 'image/png',
+        # 'purpose': 'any maskable'
+        'purpose': 'maskable'
+	}
+]
+PWA_APP_SPLASH_SCREEN = [
+	{
+		'src': ICON_PATH,
+		'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+	}
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'en-US'
+
+# Channels
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+# 아래 처럼 바꾸면 Redis안쓰고 just InMemory DB만 사용
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels.layers.InMemoryChannelLayer"
+#     }
+# }
