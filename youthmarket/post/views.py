@@ -1,9 +1,48 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Icon
-from .forms import IconModelForm
-def index(request):
-    return render(request, 'index.html')
+from .models import Icon, User, Post, LikePost, School, ChatRoom, Category
+from .forms import IconModelForm, PostModelForm
+
+def main(request):
+    print('main()')
+    posts = Post.objects.filter().order_by('-createdDate') #DESC
+    # sellers = User.objects.filter(pk=posts.sellerIdx) 판매자이름을 posts에서 접근가능하게 어떻게 할까? 그냥 sellerName을 Post에 넣어버릴까?
+    return render(request, 'main_b.html', {'posts': posts})
+
+def detail(request, post_id):
+    post_detail = get_object_or_404(Post, idx=post_id)
+    post_detail.count += 1
+    post_detail.save()
+    print(f"post_detail: {post_detail}, post_detail.sellerIdx: {post_detail.sellerIdx}")
+    user_object = post_detail.sellerIdx
+    print(f'user_object: {user_object}')
+    sellerInfo = get_object_or_404(User, idx=user_object.idx)
+    print('sellerInfo: ', sellerInfo)
+    return render(request, 'post_detail_b.html', {'post_detail': post_detail, 'sellerInfo': sellerInfo})
+
+def create(request):
+    if request.method == "POST" or request.method=="FILES":
+        print('create()/POST/if')
+        form = PostModelForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('main')
+    else:
+        print('create()/GET/else')
+        form = PostModelForm()
+    return render(request, 'post_create_b.html', {'form': form})
+
+def my_post(request):
+    user_idx = 1 # 현재 접속중인 user의 idx를 의미(1: 고경환1, 2: 고경환2)
+    posts = Post.objects.filter(sellerIdx = user_idx).order_by('-createdDate') #DESC
+    return render(request, 'my_post_b.html', {'posts': posts, 'user_idx': user_idx})
+
+def my_detail(request):
+    user_idx = 1 # 현재 접속중인 user의 idx를 의미(1: 고경환1, 2: 고경환2)
+    my_info = get_object_or_404(User, idx=user_idx)
+    return render(request, 'my_detail_b.html', {'my_info': my_info})
+
+
 
 def icon_upload(request):
     if request.method == 'POST' or request.method == 'FILES':

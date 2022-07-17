@@ -17,7 +17,11 @@ from django.urls import path, include
 from post import views
 
 urlpatterns = [
-    path('', views.index, name="index"),
+    path('', views.main, name="main"), # List-All
     path('iconupload/', views.icon_upload, name="icon_upload"),
     path('icondetail/<int:icon_id>', views.icon_detail, name="icon_detail"),
+    path('create/', views.create, name='create'),
+    path('detail/<int:post_id>', views.detail, name="detail"),
+    path('my-post/', views.my_post, name="my_post"),
+    path('my-detail/', views.my_detail, name="my_detail"),
 ]

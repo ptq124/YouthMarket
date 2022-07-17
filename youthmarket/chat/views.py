@@ -10,3 +10,7 @@ def room(request, room_name):
     return render(request, 'room.html', {
         'room_name_json': mark_safe(json.dumps(room_name))
     })
+# def chat(request, post_id):
+#     return render(request, 'chat.html', {
+#         'chat_room_json': mark_safe(json.dumps(post_id))
+#     })

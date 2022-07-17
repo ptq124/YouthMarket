@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block contents %}
+
+<body>
+    <h1>{{ my_info.idx }}의 내정보 페이지입니다</h1>    
+    <p>
+        <img src="{{ my_info.photo.url }}" alt= "" height="100">
+        <h5>이름: {{ my_info.userName }}</h5>
+        <h5>아이디: {{ my_info.userId }}</h5>
+        <h5>비밀번호: {{ my_info.userPw }}</h5>
+        <h6>학교: {{ my_info.schoolIdx }}</h6>
+    </p>
+    </br>
+</body>
+{% endblock %}

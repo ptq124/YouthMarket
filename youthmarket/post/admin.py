@@ -1,4 +1,10 @@
 from django.contrib import admin
-from .models import Icon
+from .models import Icon, User, Post, Category, ChatRoom, LikePost, School
 # Register your models here.
 admin.site.register(Icon)
+admin.site.register(User)
+admin.site.register(Post)
+admin.site.register(Category)
+admin.site.register(ChatRoom)
+admin.site.register(LikePost)
+admin.site.register(School)
