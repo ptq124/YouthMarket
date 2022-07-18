@@ -1,14 +1,69 @@
 {% extends "base.html" %}
 {% block contents %}
-<img src="{{ post_detail.photo.url }}" alt= "" height="200"> 
-<h1>제목: {{ post_detail.title }}</h1>
-<img src="{{ sellerInfo.photo.url }}" alt="" height="100">
-<h2>판매자: {{ sellerInfo.userName }}</h2>
-<h2>가격: {{ post_detail.price  }}원</h2>
-<h5>작성일: {{ post_detail.createdDate }}</h5>
-<h4>글: {{ post_detail.text }}</h4>
-<a href="{% url 'main' %}">목록</a>
-<input id="room-name-submit" type="button" value="채팅하기"/>
+<!-- Masthead-->
+<header class="masthead bg-primary text-white text-center" style="padding-top: calc(1rem + 10px); padding-bottom: 1rem;">
+    <div class="container d-flex align-items-center flex-column">
+        <!-- Masthead Avatar Image-->
+        <img class="masthead-avatar" style="height: 200px;" src="{{ post_detail.photo.url }}" alt="..." />
+        <!-- Masthead Heading-->
+        <h1 class="masthead-heading text-uppercase mb-0" style="font-size: 1.75rem;">{{ post_detail.title }}</h1>
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- Masthead Subheading-->
+        <p class="masthead-subheading font-weight-light mb-0">{{ post_detail.price  }}원</p>
+        <p class="masthead-subheading font-weight-light mb-0">{{ post_detail.createdDate }}</p>
+    </div>
+</header>
+    <div class="container" style="margin-top: 50px;">
+        <div style="display: flex;">
+            <img src="{{ sellerInfo.photo.url }}" alt="" style="border-radius: 60px; margin-left: 30px; height: 100px;">
+            <h2 style="height: 38px; border: solid 2px yellow; border-radius: 8px; margin-top: 30px; margin-left: 20px;">{{ sellerInfo.userName }}</h2>
+        </div>
+    </div>
+
+<!-- About Section-->
+<section id="about">
+    <div class="container">
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- About Section Content-->
+        <div class="row" style="margin-bottom: 20px ; margin-left: 15px; margin-right: 15px; border-radius: 10px; background-color: rgb(199, 199, 199);">
+            <div class="col-lg-4 me-auto"><p class="lead">{{ post_detail.text }}</p></div>
+            <div class="col-lg-4 me-auto"><p class="lead">작성일: {{ post_detail.createdDate }}</p></div>
+            <br>
+        </div>
+        
+            
+    </div>
+</section>
+<!-- btn-->
+<div class="container">
+    <div class="form-floating mb-3 navbar" style="margin: 0 auto;">
+        <a class="btn btn-primary btn-xl" style="width: 150px;" href="{% url 'main' %}">목록</a>
+        <input class="btn btn-primary btn-xl" style="width: 150px;" id="room-name-submit" type="button" value="채팅하기"/>
+    </div>
+</div>
+<!-- Footer-->
+<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-bottom" style="background-color: #e5fff3;" id="mainNav">
+    <div class="container" style="background-color: #e5fff3;">
+        
+
+        <div class="col-lg-4" style="background-color: #e5fff3; ">
+            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Vector.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/smalllogo.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Person.png" alt="..." /></a>
+            
+        </div>
+    </div>
+</nav>
 <body>
     <script>
     document.querySelector('#room-name-submit').onclick = function(e) {
