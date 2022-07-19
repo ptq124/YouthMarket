@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% block contents %}
     <body>
+        <p>
+            <!-- {% if user.photo %}
+            <img src="{{ user.photo.url }}" style="width: 80px; height: 100px;">
+            {% else %}
+            <img src="http://127.0.0.1:8000/media/icons/user_default.PNG" style="width: 80px; height: 100px;">
+            {% endif %} -->
+            <img src="{{ user.photo.url }}" style="width: 80px; height: 100px;">
+            안녕하세요! <h4>{{ user.userName }} 님</h4>
+            학교idx: <h4>{{ user.schoolIdx }}</h4>
+        </p>
         <div id="app">
             <div class="topIcon">
                 <img src="../../static/assets/smalllogo.png" alt="로고">
@@ -35,7 +45,7 @@
         <div style="border: solid 3px #ade3ca; border-radius: 8px; margin-left: 25px; margin-right: 25px; ">
             <div style="display: flex;">
                 <div style="margin-top: 18px; margin-left: 10px;"><img src="{{ post.photo.url }}" alt= "" style=" display: table-cell; width: 80px; height: 100px; vertical-align: middle;"></div>
-                <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;" >    <h6><a href="{% url 'detail' post.idx %}"> {{ post.title }}</a></h6>
+                <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;" >    <h6><a href="{% url 'detail_post' post.idx %}"> {{ post.title }}</a></h6>
                     <h6>가격: {{ post.price }}원</h6>    
                     <h7>판매자: {{ post.sellerIdx }}</h7><br>
                     <h7>{{ post.createdDate }}</h7><br>
