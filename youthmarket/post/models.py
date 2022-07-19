@@ -27,6 +27,7 @@ class User(models.Model):
     schoolIdx = models.IntegerField(verbose_name="학교idx") # 학교 인덱스
     userId = models.CharField(max_length=50, null=False, verbose_name="사용자id")
     userPw = models.CharField(max_length=256, null=False ,verbose_name="사용자pw")
+    userRePw = models.CharField(max_length=256, null=True, blank=True ,verbose_name="사용자재입력pw")
     userName = models.CharField(max_length=10, null=False, verbose_name="사용자이름")
     photo = models.ImageField(blank=True, null=True ,upload_to='users', verbose_name="이미지경로")
     addrCode = models.CharField(max_length=256, verbose_name="우편번호") # 우편번호

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block contents %}
+<form action="" method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+	<!-- <table>
+		{{ form.as_table }}  -->
+        <!-- # dict로 전달 받은 객체를 table형태로 보여줌 .as_p 도 잇음 -->
+	<!-- </table> -->
+    <p>
+        <div>학교idx: {{ form.schoolIdx }}</div>
+        <div>아이디: {{ form.userId }}</div>
+        <div>비밀번호: {{ form.userPw }}</div>
+        <div>재입력비밀번호: {{ form.userRePw }}</div>
+        <div>이름: {{ form.userName }}</div>
+        <div>사진: {{ form.photo }}</div>
+    </p>
+    <button type="submit">회원가입</button>
+</form>
+{% endblock %}
