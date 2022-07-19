@@ -1,17 +1,75 @@
+{% load static %}
 <!-- chat/templates/chat/room.html -->
 <!DOCTYPE html>
 <html>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
 <head>
     <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <title>Chat Room</title>
+    <style>
+        
+    </style>
 </head>
 
 <body>
-    <!-- <span><h6>My Channel Name:</h6><h6 id="my-channel-name"></h6></span><br/> -->
-    <h6>내 채널이름:</h6><input type="text" id="my-channel-name" style="width:303px;height:20px;font-size:15px;"><br/>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br/>
-    <input id="chat-message-input" type="text" size="100"/><br/>
-    <input id="chat-message-submit" type="button" value="보내기"/>
+
+
+    <header class="masthead bg-primary text-white text-center" style="padding-top: calc(1rem + 10px); padding-bottom: 1rem;">
+        <div class="container d-flex align-items-center flex-column">
+            <!-- Masthead Heading-->
+            <h5 class="masthead-heading text-uppercase mb-0" style="font-size: 1.75rem;"><h6>내 채널이름:</h6><input type="text" id="my-channel-name" style="font-size:15px; border-radius: 8px;"></h5>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light" style="margin-bottom: 30px;">
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+            <textarea id="chat-log" cols="100" rows="20" style="width:80%;  border-radius: 8px;"></textarea><br/>
+            <div style="display: flex; width: 80%; margin: 0 auto;">
+                <input id="chat-message-input" type="text" size="100" style="width: 70%; border-radius: 8px;"/>
+                <input id="chat-message-submit" class="btn btn-primary" style="margin-left: 20px; background-color: aliceblue; color:black;" type="button" value="보내기"/>
+            </div>
+            <br/><br/><br/><br/><br/>
+        </div>
+        
+    </header>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Footer-->
+<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-bottom" style="background-color: #e5fff3;" id="mainNav">
+    <div class="container" style="background-color: #e5fff3;">
+        
+
+        <div class="col-lg-4" style="background-color: #e5fff3; ">
+            <a class="btn btn-social mx-1" href="{% url 'main' %}"><img class="img-fluid" src="../../static/assets/Vector.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/smalllogo.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="{% url 'my_detail' %}"><img class="img-fluid" src="../../static/assets/Person.png" alt="..." /></a>
+            
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+
+
+    
 </body>
 
 <script>
