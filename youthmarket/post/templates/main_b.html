@@ -1,6 +1,36 @@
 {% extends "base.html" %}
 {% block contents %}
     <body>
+        <div id="app">
+            <div class="topIcon">
+                <img src="../../static/assets/smalllogo.png" alt="로고">
+            </div>
+            <div class="main-page">
+                <div class="main-page__input">
+                    <!--<form>
+                        <input id="main--input" type="text">
+                        <button id="main--btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>-->
+                </div>
+                <div class="main-page__con">
+                    <div class="main-page__con--box">
+                        <a href="#">조건1</a>
+                        <a href="#">조건2</a>
+                        <a href="#">조건3</a>
+                        <a href="#">조건4</a>
+                    </div>
+                </div>
+                <!-- 
+                <div class="main-page__items">
+                    <div class="main-page__items--box">
+                    asdsa 
+    
+                    </div>
+                </div>-->
+            </div>
+        </div>
+        <br>
+        <br>
         {% for post in posts %}
         <div style="border: solid 3px #ade3ca; border-radius: 8px; margin-left: 25px; margin-right: 25px; ">
             <div style="display: flex;">
@@ -21,12 +51,11 @@
                 
 
                 <div class="col-lg-4" style="background-color: #e5fff3; ">
-                    <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Vector.png" alt="..." /></a>
+                    <a class="btn btn-social mx-1" href="{% url 'main' %}"><img class="img-fluid" src="../../static/assets/Vector.png" alt="..." /></a>
                     <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png" alt="..." /></a>
                     <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/smalllogo.png" alt="..." /></a>
                     <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png" alt="..." /></a>
-                    <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Person.png" alt="..." /></a>
-                    
+                    <a class="btn btn-social mx-1" href="{% url 'my_detail' %}"><img class="img-fluid" src="../../static/assets/Person.png" alt="..." /></a>
                 </div>
             </div>
         </nav>

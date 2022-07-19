@@ -2,14 +2,55 @@
 {% block contents %}
 
 <body>
-    <h1>{{ my_info.idx }}의 내정보 페이지입니다</h1>    
-    <p>
-        <img src="{{ my_info.photo.url }}" alt= "" height="100">
-        <h5>이름: {{ my_info.userName }}</h5>
-        <h5>아이디: {{ my_info.userId }}</h5>
-        <h5>비밀번호: {{ my_info.userPw }}</h5>
-        <h6>학교: {{ my_info.schoolIdx }}</h6>
-    </p>
+    <header class="masthead bg-primary text-white text-center" style="padding-top: calc(1rem + 10px); padding-bottom: 1rem;">
+        <div class="container d-flex align-items-center flex-column">
+            <!-- Masthead Heading-->
+            <h1 class="masthead-heading text-uppercase mb-0" style="font-size: 1.75rem;">{{ my_info.idx }}의 내정보 페이지</h1>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light" style="margin-bottom: 30px;">
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+            
+        </div>
+        
+    </header>
+
+    <div class="container" style="margin-top: 50px;">
+        <div style="display: flex;">
+            <img src="{{ my_info.photo.url }}" alt="" style="border-radius: 60px; margin: 0 auto; margin-bottom: 20px; height: 100px;">
+        </div>
+        <h2 style="height: 38px; width: 120px; margin-top: 20px; border: solid 2px yellow; border-radius: 8px; margin-top: 30px; margin: 0 auto;">{{ my_info.userName }}</h2>
+    </div>
+
+
+    <div style="border: solid 3px #ade3ca; border-radius: 8px; margin-top: 30px; margin-left: 25px; margin-right: 25px; ">
+        <div style="padding-top: 10px;">   
+                <h5>아이디: {{ my_info.userId }}</h5>
+                <h5>비밀번호: {{ my_info.userPw }}</h5>
+                <h5>학교: {{ my_info.schoolIdx }}</h5>
+            
+            </div>
+        </div>
+    </div>
+
+
     </br>
+<!-- Footer-->
+<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-bottom" style="background-color: #e5fff3;" id="mainNav">
+    <div class="container" style="background-color: #e5fff3;">
+        
+
+        <div class="col-lg-4" style="background-color: #e5fff3; ">
+            <a class="btn btn-social mx-1" href="{% url 'main' %}"><img class="img-fluid" src="../../static/assets/Vector.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/smalllogo.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="{% url 'my_detail' %}"><img class="img-fluid" src="../../static/assets/Person.png" alt="..." /></a>
+            
+        </div>
+    </div>
+</nav>
 </body>
 {% endblock %}
+

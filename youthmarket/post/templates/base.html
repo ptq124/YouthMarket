@@ -13,13 +13,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
         <title>YouthMarket</title>
+        <style>
+            #id_text{
+                width: 250px;
+                background-color: white;
+                border-radius: 10px;
+            
+            }
+            label{
+                width: 90px;
+            }
+            #id_sellerIdx{
+                width: 200px;
+            }
+        </style>
     </head> 
     {% block contents %}
     {% endblock %}
     <br/>
     <br/>
-    <a href="{% url 'main' %}">메인페이지로 이동</a> |
     <a href="{% url 'create' %}">게시글 작성페이지로 이동</a> |
     <a href="{% url 'my_post' %}">내 게시글 보기페이지로 이동</a> |
-    <a href="{% url 'my_detail' %}">내 정보페이지로 이동</a> |
 </html>
