@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block contents %}
+    <p>
+        <!-- {% if user.photo %}
+        <img src="{{ user.photo.url }}" style="width: 80px; height: 100px;">
+        {% else %}
+        <img src="http://127.0.0.1:8000/media/icons/user_default.PNG" style="width: 80px; height: 100px;">
+        {% endif %} -->
+        <img src="{{ user.photo.url }}" style="width: 80px; height: 100px;">
+        안녕하세요! <h4>{{ user.userName }} 님</h4>
+        학교idx: <h4>{{ user.schoolIdx }}</h4>
+    </p>
+    <body>
+        {% for post in posts %}
+        <div style="border: solid 3px #ade3ca; border-radius: 8px; margin-left: 25px; margin-right: 25px; ">
+            <div style="display: flex;">
+                <div style="margin-top: 18px; margin-left: 10px;"><img src="{{ post.photo.url }}" alt= "" style=" display: table-cell; width: 80px; height: 100px; vertical-align: middle;"></div>
+                <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;" >    <h6><a href="{% url 'detail_post' post.idx %}"> {{ post.title }}</a></h6>
+                    <h6>가격: {{ post.price }}원</h6>    
+                    <h7>판매자: {{ post.sellerIdx }}</h7><br>
+                    <h7>{{ post.createdDate }}</h7><br>
+                    <h7>방문: {{post.count}}</h7>
+                </div>
+            </div>
+        </div>
+        </br>
+        {% endfor %}
+        <!-- Footer-->
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-bottom" style="background-color: #e5fff3;" id="mainNav">
+            <div class="container" style="background-color: #e5fff3;">
+                
+
+                <div class="col-lg-4" style="background-color: #e5fff3; ">
+                    <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Vector.png" alt="..." /></a>
+                    <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png" alt="..." /></a>
+                    <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/smalllogo.png" alt="..." /></a>
+                    <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png" alt="..." /></a>
+                    <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Person.png" alt="..." /></a>
+                    
+                </div>
+            </div>
+        </nav>
+    </body>
+{% endblock %}
+
+

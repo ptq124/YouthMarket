@@ -1,27 +1,12 @@
-"""youthmarket URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.urls import path, include
 from post import views
 
 urlpatterns = [
     path('', views.main, name="main"), # List-All
-    path('iconupload/', views.icon_upload, name="icon_upload"),
-    path('icondetail/<int:icon_id>', views.icon_detail, name="icon_detail"),
-    path('create/', views.create, name='create'),
-    path('detail/<int:post_id>', views.detail, name="detail"),
+    path('upload-icon/', views.upload_icon, name="upload_icon"),
+    path('detail-icon/<int:icon_id>', views.detail_icon, name="detail_icon"),
+    path('create-post/', views.create_post, name='create_post'),
+    path('detail-post/<int:post_id>', views.detail_post, name="detail_post"),
     path('my-post/', views.my_post, name="my_post"),
     path('my-detail/', views.my_detail, name="my_detail"),
 ]
