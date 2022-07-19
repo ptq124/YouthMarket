@@ -15,5 +15,9 @@ class PostForm(forms.Form):
 class PostModelForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'text', 'price', 'sellerIdx', 'photo', 'categoryIdx']
+        fields = ['title', 'text', 'price','photo', 'categoryIdx']
 
+class UserModelForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['schoolIdx', 'userId', 'userPw', 'userRePw', 'userName', 'photo']

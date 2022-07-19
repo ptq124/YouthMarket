@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+    {% load pwa %}
+    {% progressive_web_app_meta %}
+    <link rel="manifest" href="manifest.json">
+    <!-- <link rel="stylesheet" href="/youthmarket/youthmarket/post/templates/css/styles.css"> -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <head>
+    
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>YouthMarket</title>
+        <a href="{% url 'register' %}">회원가입</a>|
+        <a href="{% url 'login' %}">로그인</a>|
+        <a href="{% url 'logout' %}">로그아웃</a>
+        <br/><br/>
+    </head> 
+    {% block contents %}
+    {% endblock %}
+    <br/>
+    <br/>
+    <a href="{% url 'main' %}">메인페이지로 이동</a> |
+    <a href="{% url 'create_post' %}">게시글 작성페이지로 이동</a> |
+    <a href="{% url 'my_post' %}">내 게시글 보기페이지로 이동</a> |
+    <a href="{% url 'my_detail' %}">내 정보페이지로 이동</a> |
+</html>
