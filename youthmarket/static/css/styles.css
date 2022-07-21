@@ -603,6 +603,7 @@ progress {
 }
 
 .lead {
+  background-color: rgb(199, 199, 199);
   font-size: 1.25rem;
   font-weight: 300;
 }
@@ -1494,7 +1495,7 @@ progress {
 
   .col-lg-4 {
     flex: 0 0 auto;
-    background-color: #13653f;
+    background-color: rgb(199, 199, 199);
   }
 
   .col-lg-5 {
@@ -3222,7 +3223,7 @@ textarea.form-control-lg {
 .btn-check:checked + .btn-success, .btn-check:active + .btn-success, .btn-success:active, .btn-success.active, .show > .btn-success.dropdown-toggle {
   color: #fff;
   background-color: #146c43;
-  border-color: #13653f;
+  border-color: rgb(199, 199, 199);
 }
 .btn-check:checked + .btn-success:focus, .btn-check:active + .btn-success:focus, .btn-success:active:focus, .btn-success.active:focus, .show > .btn-success.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.25rem rgba(60, 153, 110, 0.5);
