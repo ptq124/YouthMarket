@@ -14,8 +14,8 @@
         
         <title>YouthMarket</title>
         <style>
-            #id_text{
-                width: 250px;
+            #id_text,#id_title,#id_price{
+                width: 70%;
                 background-color: white;
                 border-radius: 10px;
             
@@ -29,10 +29,7 @@
         </style>
         
     </head> 
-        <a href="{% url 'register' %}">회원가입</a>|
-        <a href="{% url 'login' %}">로그인</a>|
-        <a href="{% url 'logout' %}">로그아웃</a>
-        <br/><br/>
+        
     {% block contents %}
     {% endblock %}
     <br/>
