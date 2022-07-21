@@ -1,4 +1,3 @@
-from pyexpat import model
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -95,4 +94,13 @@ class LikePost(models.Model):
     def __str__(self):
         return f"{self.idx}_{self.userIdx}_{self.postIdx}_{self.status}"
 
+# 테스트용(https://www.youtube.com/watch?v=xrKKRRC518Y)
+class Msg(models.Model):
+    author = models.ForeignKey(User, related_name="author_messages", on_delete=models.CASCADE, verbose_name="저자")
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.author.userName
 
+    def last_10_messages():
+        return Msg.objects.order_by('-timestamp').all()[:10] # ASC
