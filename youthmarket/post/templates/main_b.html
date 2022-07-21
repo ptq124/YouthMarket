@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block contents %}
     <body>
-        <p>
+        <p class="bg-primary text-white">
             <!-- {% if user.photo %}
             <img src="{{ user.photo.url }}" style="width: 80px; height: 100px;">
             {% else %}
             <img src="http://127.0.0.1:8000/media/icons/user_default.PNG" style="width: 80px; height: 100px;">
             {% endif %} -->
             <img src="{{ user.photo.url }}" style="width: 80px; height: 100px;">
-            안녕하세요! <h4>{{ user.userName }} 님</h4>
-            학교idx: <h4>{{ user.schoolIdx }}</h4>
+            안녕하세요 {{ user.userName }} 님!
+            (학교idx: {{ user.schoolIdx }})
         </p>
         <div id="app">
             <div class="topIcon">
@@ -63,7 +63,7 @@
                 <div class="col-lg-4" style="background-color: #e5fff3; ">
                     <a class="btn btn-social mx-1" href="{% url 'main' %}"><img class="img-fluid" src="../../static/assets/Vector.png" alt="..." /></a>
                     <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png" alt="..." /></a>
-                    <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/smalllogo.png" alt="..." /></a>
+                    <a class="btn btn-social mx-1" href="{% url 'create_post' %}"><img class="img-fluid" src="../../static/assets/Plus.png" alt="..." /></a>
                     <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png" alt="..." /></a>
                     <a class="btn btn-social mx-1" href="{% url 'my_detail' %}"><img class="img-fluid" src="../../static/assets/Person.png" alt="..." /></a>
                 </div>
