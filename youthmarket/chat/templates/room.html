@@ -72,10 +72,12 @@
     
 </body>
 
+<script src="{% static 'js/reconnecting-websocket.js' %}"></script>
 <script>
     var roomName = {{ room_name_json }};
 
-    var chatSocket = new WebSocket(
+    // var chatSocket = new WebSocket(
+    var chatSocket = new ReconnectingWebSocket(
         'ws://' + window.location.host +
         '/ws/chat/' + roomName + '/');
 
@@ -83,14 +85,15 @@
         console.log('[ko]onmessage/start');
         var data = JSON.parse(e.data);
         var message = data['message'];
-        var my_channel_name = data['my_channel_name'];
-        var sender_channel_name = data['sender_channel_name'];
-        console.log('chatSocket.onmsg/my_channel_name: ', my_channel_name);
-        console.log('chatSocket.onmsg/sender_channel_name: ', sender_channel_name);
-        console.log('chatSocket.onmsg/e: ', e);
-        console.log('chatSocket.onmsg/e.data: ', e.data);
-        document.querySelector('#my-channel-name').value = my_channel_name;
-        document.querySelector('#chat-log').value += ('<Sended by: '+sender_channel_name+'>\n'+message + '\n');
+        // var my_channel_name = data['my_channel_name'];
+        // var sender_channel_name = data['sender_channel_name'];
+        // console.log('chatSocket.onmsg/my_channel_name: ', my_channel_name);
+        // console.log('chatSocket.onmsg/sender_channel_name: ', sender_channel_name);
+        // console.log('chatSocket.onmsg/e: ', e);
+        // console.log('chatSocket.onmsg/e.data: ', e.data);
+        // document.querySelector('#my-channel-name').value = my_channel_name;
+        // document.querySelector('#chat-log').value += ('<Sended by: '+sender_channel_name+'>\n'+message + '\n');
+        document.querySelector('#chat-log').value += (+message + '\n');
         console.log('[ko]onmessage/end');
     };
 
@@ -109,7 +112,8 @@
         var messageInputDom = document.querySelector('#chat-message-input');
         var message = messageInputDom.value;
         chatSocket.send(JSON.stringify({
-            'message': message
+            'message': message,
+            'command': 'fetch_messages'
         }));
         messageInputDom.value = '';
     };
