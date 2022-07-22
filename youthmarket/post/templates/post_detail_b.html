@@ -71,8 +71,10 @@
     document.querySelector('#room-name-submit').onclick = function(e) {
         // var roomName = document.querySelector('#room-name-input').value;
         console.log('post_detail.idx: ', {{ post_detail.idx}});
-        var roomName = {{ post_detail.idx }};
-        window.location.pathname = '/chat/' + roomName + '/';
+        var post_idx = {{ post_detail.idx }};
+        var seller_idx = {{ sellerInfo.idx }};
+        var buyer_idx = {{ myInfo.idx }};
+        window.location.pathname = '/chat/' + post_idx + '-' + seller_idx + '-' + buyer_idx;
     };
     </script>
 </body>

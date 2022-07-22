@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block contents %}
+<body>
+    <p class="bg-primary text-white">
+        <img src="{{ user.photo.url }}" style="width: 80px; height: 100px;">
+        안녕하세요 {{ user.userName }} 님!
+        (학교idx: {{ user.schoolIdx }})
+    </p>
+    <a href="{% url 'my_chat_imbuyer' %}">내가 구매자인 채팅방</a>|
+    <a href="{% url 'my_chat_imseller' %}">내가 판매자인 채팅방</a>
+    <div id="app">
+        <div class="topIcon">
+            <img src="../../static/assets/smalllogo.png" alt="로고">
+        </div>
+    </div>
+    <br>
+    <br>
+    {% for chatroom in chatroom_list %}
+    <div style="border: solid 3px #ade3ca; border-radius: 8px; margin-left: 25px; margin-right: 25px; ">
+        <div style="display: flex;">
+            <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;" >    
+                <input id="chatroom-join" type="button" value="채팅방 입장"/>
+                <h6>채팅방idx: {{ chatroom.idx }}</h6>    
+                <h7>게시글: {{ chatroom.postIdx }}</h7><br>
+                <h7>판매자idx: {{ chatroom.sellerIdx }}</h7><br>
+                <h7>구매자idx: {{ chatroom.buyerIdx }}</h7><br>
+                <h7>생성된날짜: {{ chatroom.createdDate }}  </h7><br>
+            </div>
+        </div>
+    </div>
+    </br>
+    {% endfor %}
+    <!-- Footer-->
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-bottom" style="background-color: #e5fff3;" id="mainNav">
+        <div class="container" style="background-color: #e5fff3;">
+            
+
+            <div class="col-lg-4" style="background-color: #e5fff3; ">
+                <a class="btn btn-social mx-1" href="{% url 'main' %}"><img class="img-fluid" src="../../static/assets/Vector.png" alt="..." /></a>
+                <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png" alt="..." /></a>
+                <a class="btn btn-social mx-1" href="{% url 'create_post' %}"><img class="img-fluid" src="../../static/assets/Plus.png" alt="..." /></a>
+                <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png" alt="..." /></a>
+                <a class="btn btn-social mx-1" href="{% url 'my_detail' %}"><img class="img-fluid" src="../../static/assets/Person.png" alt="..." /></a>
+            </div>
+        </div>
+    </nav>
+    <script>
+        document.querySelector('#chatroom-join').onclick = function(e) {
+            // var roomName = document.querySelector('#room-name-input').value;
+            console.log('my_chatroom_imbuyer.html/#chatroom-join clikcked');
+            // var post_idx = {{ post_detail.idx }};
+            // var seller_idx = {{ sellerInfo.idx }};
+            // var buyer_idx = {{ myInfo.idx }};
+            // window.location.pathname = '/chat/' + post_idx + '-' + seller_idx + '-' + buyer_idx;
+            // http://127.0.0.1:8000/chat/1-1-3 이렇게 url을 쏴줘야 채팅방으로 갈 수 있음
+        };
+        </script>
+</body>
+{% endblock %}
