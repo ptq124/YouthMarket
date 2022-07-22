@@ -1,1 +1,1 @@
-web: gunicorn YouthMarket.wsgi --log-file -
+web: gunicorn youthmarket.wsgi --log-file -
