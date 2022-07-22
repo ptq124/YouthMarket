@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Icon, User, Post, LikePost, School, ChatRoom, Category
+from .models import Icon, User, Post, LikePost, School, ChatRoom, Category, Message, Msg
 from .forms import IconModelForm, PostModelForm
 
 def main(request):
@@ -21,8 +21,8 @@ def detail_post(request, post_id):
     if idx == None:
         return redirect('login')
     post_detail = get_object_or_404(Post, idx=post_id)
-    post_detail.count += 1
-    post_detail.save()
+    # post_detail.count += 1
+    # post_detail.save()
     print(f"post_detail: {post_detail}, post_detail.sellerIdx: {post_detail.sellerIdx}")
     user_object = post_detail.sellerIdx
     print(f'user_object: {user_object}')
@@ -64,9 +64,29 @@ def my_detail(request):
     print('my_detail/idx: ', idx)
     if idx == None:
         return redirect('login')
-    user_idx = request.session.get('user') # 현재 접속중인 user의 idx를 의미(1: 고경환1, 2: 고경환2)
+    user_idx = idx # 현재 접속중인 user의 idx를 의미(1: 고경환1, 2: 고경환2)
     my_info = get_object_or_404(User, idx=user_idx)
     return render(request, 'my_detail_b.html', {'my_info': my_info})
+
+def my_chat_imbuyer(request):
+    idx = request.session.get('user') 
+    print('my_chat_imbuyer/idx: ', idx)
+    if idx == None:
+        return redirect('login')
+    user_idx = idx
+    user = get_object_or_404(User, idx = user_idx)
+    chatroom_list = ChatRoom.objects.filter(buyerIdx = user_idx)
+    return render(request, 'my_chatroom_imbuyer.html', {'chatroom_list': chatroom_list, 'user': user})
+
+def my_chat_imseller(request):
+    idx = request.session.get('user') 
+    print('my_chat_imsller/idx: ', idx)
+    if idx == None:
+        return redirect('login')
+    user_idx = idx
+    user = get_object_or_404(User, idx = user_idx)
+    chatroom_list = ChatRoom.objects.filter(sellerIdx = user_idx)
+    return render(request, 'my_chatroom_imseller.html', {'chatroom_list': chatroom_list, 'user': user})
 
 
 

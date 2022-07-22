@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os, json
 from django.core.exceptions import ImproperlyConfigured
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,12 +36,15 @@ def get_secret(setting):
     except KeyError:
         error_msg = f"Set the {setting} environment variable"
         raise ImproperlyConfigured(error_msg)
-
-SECRET_KEY = get_secret("SECRET_KEY")
+# heroku배포 참고: https://eunjin3786.tistory.com/244
+# SECRET_KEY = get_secret("SECRET_KEY")
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_secret("SECRET_KEY"))
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+# DEBUG = True
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -66,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'youthmarket.urls'
@@ -99,6 +104,8 @@ DATABASES = {
     }
 }
 
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

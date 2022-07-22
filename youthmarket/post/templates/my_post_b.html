@@ -21,7 +21,7 @@
         <div style="border: solid 3px #ade3ca; border-radius: 8px; margin-left: 25px; margin-right: 25px; ">
             <div style="display: flex;">
                 <div style="margin-top: 18px; margin-left: 10px;"><img src="{{ post.photo.url }}" alt= "" style=" display: table-cell; width: 80px; height: 100px; vertical-align: middle;"></div>
-                <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;" >    <h6><a href="{% url 'detail' post.idx %}"> {{ post.title }}</a></h6>
+                <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;" >    <h6><a href="{% url 'detail_post' post.idx %}"> {{ post.title }}</a></h6>
                     <h6>가격: {{ post.price }}원</h6>    
                     <h7>판매자: {{ post.sellerIdx }}</h7><br>
                     <h7>{{ post.createdDate }}</h7><br>
