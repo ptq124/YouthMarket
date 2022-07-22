@@ -1,15 +1,15 @@
 # # chat/consumers.py
-from distutils import text_file
-from email import message
+from django.shortcuts import get_object_or_404, render, redirect
 # from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 import json
-from post.models import Msg, User
+from post.models import Msg, User, ChatRoom, Message, Post
 
 class ChatConsumer(WebsocketConsumer):
     def fetch_messages(self, data):
-        messages_temp = Msg.last_10_messages()
+        # messages_temp = Msg.last_10_messages()
+        messages_temp = Message.last_10_messages(self.chatroom_idx)
         messages = []
         for i in range(len(messages_temp)-1, -1, -1):
             messages.append(messages_temp[i])
@@ -23,7 +23,9 @@ class ChatConsumer(WebsocketConsumer):
     def new_message(self, data):
         author = data['from']
         author_user = User.objects.filter(userName = author)[0] # Msg의 첫번째 field가 author라서 [0]
-        message = Msg.objects.create(author=author_user, content=data['message'])
+        # message = Msg.objects.create(author=author_user, content=data['message'])
+        chatroom = get_object_or_404(ChatRoom, idx = self.chatroom_idx)
+        message = Message.objects.create(author=author_user, content=data['message'], chatroomIdx = chatroom)
         print('new_message()/author_user: ', author_user)
         print('new_message()/message:', message)
         content = {
@@ -53,11 +55,26 @@ class ChatConsumer(WebsocketConsumer):
     }
 
     def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name'] # lobby
-        self.room_group_name = 'chat_%s' % self.room_name # chat_lobby
+        self.multi_idx = self.scope['url_route']['kwargs']['room_name']
+        self.post_idx, self.seller_idx, self.buyer_idx =  map(int, self.multi_idx.split('-'))
+        print(f'self.post_idx: {self.post_idx}, self.seller_idx : {self.seller_idx}, self.buyer_idx: {self.buyer_idx}')
+        if self.seller_idx != self.buyer_idx:
+            post = get_object_or_404(Post, idx = self.post_idx)
+            buyer = get_object_or_404(User, idx = self.buyer_idx)
+            seller = get_object_or_404(User, idx = self.seller_idx)
+            chatroom = ChatRoom.objects.get_or_create(postIdx = post, sellerIdx = seller, buyerIdx = buyer)
+            # print('connect()/chatroom_obj: ', chatroom) # (<ChatRoom: 1_3_1>, False)
+            self.chatroom_idx = chatroom[0].idx
+            
+            print('connect()/chatroom_obj.idx: ', self.chatroom_idx)
+            
+        else:
+            print(f'connect()/slef.seller_idx == self.buyer_idx with {self.seller_idx}')
+            exit(0)
+        # self.room_group_name = 'chat_%s' % self.post_idx
+        self.room_group_name = 'chat_%s' % self.multi_idx
         # print(f'room_name: {self.room_name}, room_group_name: {self.room_group_name}')
-        print(f'connect()/self: {self}')
-        print(f'connect()/self.channel_name: ', self.channel_name)
+
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
@@ -82,7 +99,7 @@ class ChatConsumer(WebsocketConsumer):
         self.commands[text_data_json['command']](self, text_data_json) # Jsonify를 통해 온 명령어에 따라 적절한 함수호출함
     
     def send_chat_message(self, message):
-        print(f'receive()/self.channel_name: ', self.channel_name)
+        print(f'send_chat_message()/self.channel_name: ', self.channel_name)
         # Send message to room group
         '''sender_channel_name는 보내는 사람의 channel_name을 나타냄'''
         async_to_sync(self.channel_layer.group_send)(
@@ -95,6 +112,7 @@ class ChatConsumer(WebsocketConsumer):
         )
 
     def send_message(self, message):
+        print('\nsend_message()/message: ', message)
         self.send(text_data=json.dumps(message))
 
     # Receive message from room group
