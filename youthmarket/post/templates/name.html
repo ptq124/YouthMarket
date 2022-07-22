@@ -346,7 +346,7 @@
             school:"",
             token:"",
         }
-        var naver_id_login = new naver_id_login("fYDOzzug9Ym5UTH3j_lV", "http://127.0.0.1:5500/youthmarket/users/templates/name.html");
+        var naver_id_login = new naver_id_login("fYDOzzug9Ym5UTH3j_lV", "http://127.0.0.1:5500/youthmarket/post/templates/name.html");
         // 접근 토큰 값 출력
         user.token=naver_id_login.oauthParams.access_token
         // 네이버 사용자 프로필 조회
@@ -362,12 +362,24 @@
             user.school = document.getElementById('school').value;
             user.nickname = document.getElementById('nickname').value;
             localStorage.setItem('user', JSON.stringify(user));
+            fetch('http://127.0.0.1:8000',{
+                method: 'post',
+                body: JSON.stringify({
+                    name: user.name,
+                    nickname: user.nickname,
+                    school: user.school,
+                })  
+            })
+            .then(res => {
+                    console.log(res)
+                })
+
         }
         localStorage.setItem('user', JSON.stringify(user));
-        console.log(JSON.parse(localStorage.getItem('user'))
+        //console.log(JSON.parse(localStorage.getItem('user'))
+        
     </script>
     <!--로그아웃 키-->
     <!-- https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=fYDOzzug9Ym5UTH3j_lV&client_secret=xNR1kv_UMi&access_token=AAAANgQ6HS1DSlMbqw8xcAbQWXT0rGFodlGjcQkGnwrcjFqF1hlRshMujnNxH_NWp8VY6ovbwFzokluH54_xbidsakU&service_provider=NAVER -->
 </body>
-
 </html>
