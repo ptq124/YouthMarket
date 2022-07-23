@@ -207,10 +207,10 @@
   
 
         if (author == userName){
-          msgListTag.className = 'sent';
+          msgListTag.className = 'replies';
         } else {
 			
-          msgListTag.className = 'replies';
+          msgListTag.className = 'sent';
         }
 
         msgListTag.appendChild(imgTag);
@@ -218,6 +218,10 @@
         document.querySelector('#chat-log').appendChild(msgListTag);
         // document.querySelector('#chat-log').value += (+message + '\n');
     }
+	
+
+
+
 </script>
 
 
