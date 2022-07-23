@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Icon, User, Post, LikePost, School, ChatRoom, Category, Message, Msg
 from .forms import IconModelForm, PostModelForm
-
+import json
 def main(request):
     # request.session.pop('user')
     idx = request.session.get('user') 
@@ -20,7 +20,14 @@ def detail_post(request, post_id):
     print('detail()/idx: ', idx)
     if idx == None:
         return redirect('login')
-    post_detail = get_object_or_404(Post, idx=post_id)
+    post_detail = get_object_or_404(Post, idx = post_id)
+    if request.method == 'POST':
+        print('req.body: ', request.body)
+        data = json.load(request) # 조건 선택 후 보낸 req
+        like = data['like'] # 좋아요: 0 or 1
+        print('detail_post/POST/like: ', like)
+        post_detail.like = like
+        post_detail.save()
     # post_detail.count += 1
     # post_detail.save()
     print(f"post_detail: {post_detail}, post_detail.sellerIdx: {post_detail.sellerIdx}")
@@ -76,7 +83,30 @@ def my_chat_imbuyer(request):
     user_idx = idx
     user = get_object_or_404(User, idx = user_idx)
     chatroom_list = ChatRoom.objects.filter(buyerIdx = user_idx)
-    return render(request, 'my_chatroom_imbuyer.html', {'chatroom_list': chatroom_list, 'user': user})
+    chatroom_info = '' # 1-1-3/2-2-3
+    for i in range(len(chatroom_list)):
+        print('imseller()/chatroom_list[i]:', chatroom_list[i].postIdx)
+        print('a: ', str(chatroom_list[i].postIdx).split('_')[1])
+        temp_post = get_object_or_404(Post, title=str(chatroom_list[i].postIdx).split('_')[1])
+        temp_seller = get_object_or_404(User, userName=str(chatroom_list[i].sellerIdx).split('_')[1])
+        temp_buyer = get_object_or_404(User, userName=str(chatroom_list[i].buyerIdx).split('_')[1])
+        # temp_post = get_object_or_404(Post, title=str(chatroom_list[i].postIdx))
+        # temp_seller = get_object_or_404(User, userName=str(chatroom_list[i].sellerIdx))
+        # temp_buyer = get_object_or_404(User, userName=str(chatroom_list[i].buyerIdx))
+        print('temp_post: ', temp_post)
+        print('temp_post.idx: ', temp_post.idx)
+        print('temp_seller: ', temp_seller)
+        print('temp_seller.idx: ', temp_seller.idx)
+        print('temp_buyer: ', temp_buyer)
+        print('temp_buyer.idx: ', temp_buyer.idx)
+        # print('imseller()/chatroom_list[i]:', chatroom_list[i])
+        # print('imseller()/chatroom_lst[i].postIdx: ', chatroom_list[i].postIdx)
+        if i == len(chatroom_list)-1:
+            chatroom_info += str(temp_post.idx)+ '-' + str(temp_seller.idx) + '-' + str(temp_buyer.idx)
+        else:
+            chatroom_info += str(temp_post.idx)+ '-' + str(temp_seller.idx) + '-' + str(temp_buyer.idx) + '/'
+    print('chatroom_info: ', chatroom_info)
+    return render(request, 'my_chatroom_imbuyer.html', {'chatroom_list': chatroom_list, 'user': user, 'chatroom_info': chatroom_info})
 
 def my_chat_imseller(request):
     idx = request.session.get('user') 
@@ -86,7 +116,32 @@ def my_chat_imseller(request):
     user_idx = idx
     user = get_object_or_404(User, idx = user_idx)
     chatroom_list = ChatRoom.objects.filter(sellerIdx = user_idx)
-    return render(request, 'my_chatroom_imseller.html', {'chatroom_list': chatroom_list, 'user': user})
+    # chatroom_list = ChatRoom.objects.filter(buyerIdx = user_idx)
+    chatroom_info = '' # 1-1-3/2-2-3
+    print('------------------------')
+    for i in range(len(chatroom_list)):
+        print('imseller()/chatroom_list[i]:', chatroom_list[i].postIdx)
+        print('a: ', str(chatroom_list[i].postIdx).split('_')[1])
+        temp_post = get_object_or_404(Post, title=str(chatroom_list[i].postIdx).split('_')[1])
+        temp_seller = get_object_or_404(User, userName=str(chatroom_list[i].sellerIdx).split('_')[1])
+        temp_buyer = get_object_or_404(User, userName=str(chatroom_list[i].buyerIdx).split('_')[1])
+        # temp_post = get_object_or_404(Post, title=str(chatroom_list[i].postIdx))
+        # temp_seller = get_object_or_404(User, userName=str(chatroom_list[i].sellerIdx))
+        # temp_buyer = get_object_or_404(User, userName=str(chatroom_list[i].buyerIdx))
+        print('temp_post: ', temp_post)
+        print('temp_post.idx: ', temp_post.idx)
+        print('temp_seller: ', temp_seller)
+        print('temp_seller.idx: ', temp_seller.idx)
+        print('temp_buyer: ', temp_buyer)
+        print('temp_buyer.idx: ', temp_buyer.idx)
+        # print('imseller()/chatroom_list[i]:', chatroom_list[i])
+        # print('imseller()/chatroom_lst[i].postIdx: ', chatroom_list[i].postIdx)
+        if i == len(chatroom_list)-1:
+            chatroom_info += str(temp_post.idx)+ '-' + str(temp_seller.idx) + '-' + str(temp_buyer.idx)
+        else:
+            chatroom_info += str(temp_post.idx)+ '-' + str(temp_seller.idx) + '-' + str(temp_buyer.idx) + '/'
+    print('chatroom_info: ', chatroom_info)
+    return render(request, 'my_chatroom_imseller.html', {'chatroom_list': chatroom_list, 'user': user, 'chatroom_info': chatroom_info})
 
 
 
