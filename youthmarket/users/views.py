@@ -44,6 +44,7 @@ def school(request):
         user_name = request.POST.get('user_name', None)
         birthday = request.POST.get('birthday', None)
         phone_number = request.POST.get('phone_number', None)
+        print(f'school_name: {school_name}, user_name: {user_name}, birthday: {birthday}, phone_number: {phone_number}')
         try:
             print('school()/try')
             school_user = School_User.objects.get(userName=user_name, birthday=birthday, phone_number=phone_number)
