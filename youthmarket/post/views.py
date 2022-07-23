@@ -21,8 +21,8 @@ def detail_post(request, post_id):
     if idx == None:
         return redirect('login')
     post_detail = get_object_or_404(Post, idx=post_id)
-    post_detail.count += 1
-    post_detail.save()
+    # post_detail.count += 1
+    # post_detail.save()
     print(f"post_detail: {post_detail}, post_detail.sellerIdx: {post_detail.sellerIdx}")
     user_object = post_detail.sellerIdx
     print(f'user_object: {user_object}')
