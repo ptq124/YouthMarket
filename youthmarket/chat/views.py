@@ -1,7 +1,7 @@
 # chat/views.py
 from django.shortcuts import render, get_object_or_404
 from django.utils.safestring import mark_safe
-from post.models import User
+from post.models import User,Post
 import json
 
 def index(request):
@@ -17,13 +17,23 @@ def room(request, multi_idx):
     print('room()/seller_info: ', seller_info)
     print('room()/seller_info.photo.url: ', seller_info.photo.url) # /media/users/kim.jpeg
     # return render(request, 'chat_bb.html', {
+    print("http://127.0.0.1:8000" + user_info.photo.url)
+    post = get_object_or_404(Post, pk= post_idx)
+
+
     return render(request, 'chat_bbb.html', {
         'room_name_json': mark_safe(json.dumps(post_idx)),
         'userName': mark_safe(json.dumps(userName)),
+        'yourName': mark_safe(json.dumps(seller_info.userName)),
         'user_photo_url': mark_safe(json.dumps("http://127.0.0.1:8000" + user_info.photo.url)),
+        'your_photo_url': mark_safe(json.dumps("http://127.0.0.1:8000" + seller_info.photo.url)),
         'post_idx': mark_safe(json.dumps(post_idx)),
         'seller_idx': mark_safe(json.dumps(seller_idx)),
-        'buyer_idx': mark_safe(json.dumps(buyer_idx))
+        'buyer_idx': mark_safe(json.dumps(buyer_idx)),
+
+        'post_title': mark_safe(json.dumps(post.title)),
+        'post_photo_url': mark_safe(json.dumps("http://127.0.0.1:8000" + post.photo.url)),
+
     })
 # def chat(request, post_id):
 #     return render(request, 'chat.html', {
