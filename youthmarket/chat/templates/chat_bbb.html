@@ -1,9 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-  
-<head>
-  <meta charset="utf-8"/>
+<html lang="ko">
+    {% load pwa %}
+    {% progressive_web_app_meta %}
+    <link rel="manifest" href="manifest.json">
+    <!-- <link rel="stylesheet" href="/youthmarket/youthmarket/post/templates/css/styles.css"> -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <!-- <link href="{% static 'css/chat_styles__bb.css' %}" rel="stylesheet"> -->
+    <meta charset="utf-8"/>
   <script type="text/javascript"  src="https://use.typekit.net/hoy3lrg.js" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">try{Typekit.load({ async: true });}catch(e){}</script>
 <!-- <script type="text/javascript"  src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" charset="utf-8"></script>
@@ -15,7 +19,6 @@
 <script type="text/javascript"  src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
 <!------ Include the above in your HEAD tag ---------->
-<link rel="stylesheet" href="{% static 'css/chat_styles_bb.css'%}"/>
 <!-- 
   <script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script>
 <script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script>
@@ -24,16 +27,71 @@
 <link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
 <link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" /> -->
 
-</head>
+    <head>
+    
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>YouthMarket</title>
+        
+    <style>
+      #nicName{
+        margin-top: 15px;
+        background-color: #1abc9c;
+      }
+      .sent{
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+      }
+      .sent p{
+        margin-top: 15px;
+        background-color: #c5c5c5;
+        color: black;
+        border-radius: 8px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .replies{
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      .replies img{
+        margin-left: 10px;
+        margin-right: 13px;
+        right: 0;
+      }
+
+      .replies p{
+        margin-top: 15px;
+        border-radius: 8px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+
+    </style>
+    </head> 
+        
+</html>
+
+
 <body style="background: #e5fff3;">
-<div id="frame" style="height: 844px; width: 390px;">
+<div id="frame" style="height: 844px; width: 390px; background-color: white;">
 	
 	<div class="content" style="float: none; width: 100%;">
 		<div class="contact-profile" style="background-color: #1abc9c;">
-			<img id="post_photo_url" style="width: 50px; height: 50px; background-repeat:no-repeat; background-size: 50px 50px; margin-top: 0px;" alt="" />
-			<p id="post_title"></p>
-			<p id="nicName" style="font-size: 15px; margin-bottom: 0px; margin-top: 0px;"></p>
-		</div>
+      <div style="display: flex;">
+        <img id="post_photo_url" style="width: 50px; height: 50px; background-repeat:no-repeat; background-size: 50px 50px; margin-top: 0px;" alt="" />
+        
+        <p id="nicName" style="font-size: 15px; margin-bottom: 0px;"></p>
+      </div>  
+      </div>
 		<div class="messages" style="font-size: 15px;">
 			<ul id="chat-log" style="font-size: 15px;">
 				<!-- <li class="sent">
@@ -48,13 +106,28 @@
 		</div>
 		<div class="message-input" >
 			<div class="wrap">
-			<input id="message-input" type="text" placeholder="메세지를 입력하세요..." />
+			<input id="message-input" type="text" style="width: 80%;" placeholder="메세지를 입력하세요..." />
 			<i class="fa fa-paperclip attachment" aria-hidden="true"></i>
 			<button class="submit" id ="message-submit"> 전송<i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 			</div>
 		</div>
 	</div>
 </div>
+<!-- Footer-->
+<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-bottom" style="background-color: #e5fff3;" id="mainNav">
+  <div class="container" style="background-color: #e5fff3;">
+      
+
+      <div class="col-lg-4" style="background-color: #e5fff3; ">
+          <a class="btn btn-social mx-1" href="{% url 'main' %}"><img class="img-fluid" src="../../static/assets/Vector.png" alt="..." /></a>
+      <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png" alt="..." /></a>
+      <a class="btn btn-social mx-1" href="{% url 'create_post' %}"><img class="img-fluid" src="../../static/assets/Plus.png" alt="..." /></a>
+      <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png" alt="..." /></a>
+      <a class="btn btn-social mx-1" href="{% url 'my_detail' %}"><img class="img-fluid" src="../../static/assets/Person.png" alt="..." /></a>
+          
+      </div>
+  </div>
+</nav>
 
 <!-- <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script> -->
@@ -64,26 +137,39 @@
 	var flag = false;
     var roomName = {{ room_name_json }};
     var userName = {{ userName }}; //(김경환)    \uae40\uacbd\ud658 라고 나온다..
-	console.log('typeof({{ userName }}): ', typeof({{ userName }}));
-	console.log('typeof({{ user_photo_url }})', typeof({{ user_photo_url }}));
-    console.log('roomName: ', roomName);
-    console.log('userName: ', userName); // 잘 나옴(김경환)
+	  // console.log('typeof({{ userName }}): ', typeof({{ userName }}));
+	  // console.log('typeof({{ user_photo_url }})', typeof({{ user_photo_url }}));
+    
 	var sellerIdx = {{ seller_idx }};
 	var buyerIdx = {{ buyer_idx }};
 	var user_photo_url = {{ user_photo_url }};
+  var your_photo_url = {{ your_photo_url }};
 	var post_title = {{ post_title }};
 	var post_photo_url = {{ post_photo_url }};
 	var yourName = {{ yourName }};
 
+  console.log('roomName: ', roomName);
+  console.log('userName: ', userName); // 잘 나옴(김경환)
+  console.log('yourName: ', yourName); // 잘 나옴(김경환)
+
 	
 	var nicName = document.getElementById("nicName"); // <p "id=p"> 태그의 DOM 객체 찾기
-	nicName.append(post_title + " with " + userName);
+    
+    nicName.append(post_title + " with " + yourName);
+    // if (author == userName){
+    //   nicName.append(post_title + " with " + yourName);
+    // } else {
+    //   nicName.append(post_title + " with " + author);
+    // }
+
+
 
 	console.log("post_title: ",post_title);
 	// var post_title = document.getElementById("post_title"); // <p "id=p"> 태그의 DOM 객체 찾기
 	// post_title.innerHTML(post_title);
 
 	document.getElementById('post_photo_url').style.backgroundImage = "url('" + post_photo_url + "')";
+  
 
 
 	
@@ -153,24 +239,36 @@
         pTag.textContent = data.content;
         // imgTag.src = 'http://emilcarlsson.se/assets/mikeross.png';
 
-		// var user_info_photo_url = {{ user_info.photo.url }};
-		console.log("user_info_photo_url: ",user_photo_url);
-        imgTag.src = user_photo_url; // -> /media/icons/user_default.png 이기때문에 /로 에러남
-        console.log(imgTag.src);
-        console.log(typeof(imgTag.src));
-  
+        // var user_info_photo_url = {{ user_info.photo.url }};
+        console.log("user_info_photo_url: ",user_photo_url);
+         // -> /media/icons/user_default.png 이기때문에 /로 에러남
+        
+        // console.log(imgTag.src);
+        // console.log(typeof(imgTag.src));
+
+        console.log("userName: ", userName);
+        console.log("user_photo_url: ", user_photo_url);
+        console.log("yourName: ", yourName);
+        console.log("your_photo_url: ", your_photo_url);
 
         if (author == userName){
+
+          imgTag.src = user_photo_url;
           msgListTag.className = 'replies';
-        } else {
-			
-          msgListTag.className = 'sent';
-        }
-
-        msgListTag.appendChild(imgTag);
-        msgListTag.appendChild(pTag);
-
+          msgListTag.appendChild(pTag);
+          msgListTag.appendChild(imgTag);
         document.querySelector('#chat-log').appendChild(msgListTag);
+        } else {
+          imgTag.src = your_photo_url;
+          msgListTag.className = 'sent';
+          msgListTag.appendChild(imgTag);
+        msgListTag.appendChild(pTag);
+        document.querySelector('#chat-log').appendChild(msgListTag);
+        }
+        
+        
+
+
         // document.querySelector('#chat-log').value += (+message + '\n');
 
 		

@@ -16,7 +16,7 @@ class School(models.Model):
     schoolName = models.CharField(max_length=50, verbose_name="학교이름")
     photo = models.ImageField(blank=True, null=True ,upload_to='schools', verbose_name="이미지경로")
     addrCode = models.CharField(max_length=256, verbose_name="우편번호")
-    addr = models.CharField(max_length=256, verbose_name="학교주소") 
+    addr = models.CharField(max_length=256,verbose_name="학교주소") 
     detailAddr = models.CharField(max_length=256, verbose_name="상세주소")
     createdDate = models.DateTimeField(auto_now_add=True, verbose_name="생성시간") # School row가 생성된 시간
     updatedDate = models.DateTimeField(blank=True, null=True, verbose_name="수정시간") # 수정된 시간
@@ -31,14 +31,29 @@ class User(models.Model):
     userRePw = models.CharField(max_length=256, null=True, blank=True ,verbose_name="사용자재입력pw")
     userName = models.CharField(max_length=10, null=False, verbose_name="사용자이름")
     photo = models.ImageField(blank=True, null=True ,upload_to='users', verbose_name="이미지경로")
-    addrCode = models.CharField(max_length=256, verbose_name="우편번호") # 우편번호
-    addr = models.CharField(max_length=256, verbose_name="집 주소") # 집 주소
-    detailAddr = models.CharField(max_length=256, verbose_name="상세주소") # 상세주소
+    addrCode = models.CharField(max_length=256, null=True, blank=True, verbose_name="우편번호") # 우편번호
+    addr = models.CharField(max_length=256, null=True, blank=True ,verbose_name="집 주소") # 집 주소
+    detailAddr = models.CharField(max_length=256,null=True , blank=True, verbose_name="상세주소") # 상세주소
     createdDate = models.DateTimeField(auto_now_add=True, verbose_name="생성시간") # 아이디 생성된 시간
     updatedDate = models.DateTimeField(blank=True, null=True, verbose_name="수정시간") # 수정된 시간
     status = models.BooleanField(verbose_name="상태" ,default=False) # 로그인 on/off -> True, False
+    bd = models.DateField(null=True, blank=True, verbose_name="bd")
+    birthday = models.CharField(max_length=15, null=True, blank=True, verbose_name="생년월일")
+    phoneNumber = models.CharField(max_length=20, null=True, blank=True, verbose_name="전화번호")
+    schoolName = models.CharField(max_length=50, null=True, blank=True, verbose_name="학교이름")
     def __str__(self):
         return f"{self.idx}_{self.userName}"
+
+class School_User(models.Model):
+    idx = models.AutoField(auto_created=True, primary_key=True, verbose_name="idx")
+    schoolIdx = models.ForeignKey(School,to_field="idx", on_delete=models.DO_NOTHING, verbose_name="학교idx")
+    userName = models.CharField(max_length=10, null=True, blank=True, verbose_name="사용자이름")
+    birthday = models.CharField(max_length=15, null=True, blank=True, verbose_name="생년월일")
+    phoneNumber = models.CharField(max_length=20, null=True, blank=True, verbose_name="전화번호")
+
+    def __str__(self):
+        return f"{self.idx}_{self.schoolIdx}_{self.phoneNumber}"
+
 # def upload_post_photo(instance):
 #     return f"/post/{instance.idx}.png"
 class Category(models.Model):
@@ -60,7 +75,8 @@ class Post(models.Model):
     categoryIdx = models.ForeignKey(Category, to_field="idx", on_delete=models.DO_NOTHING, verbose_name="카테고리idx")
     createdDate = models.DateTimeField(auto_now_add=True, verbose_name="생성시간") # 게시글 생성된 시간
     updatedDate = models.DateTimeField(blank=True, null=True, verbose_name="수정시간") # 수정된 시간
-    status = models.BooleanField(verbose_name="상태", default=True) # 판매가능 on/off -> True, False
+    like = models.IntegerField(verbose_name="좋아요상태", default=0) # 좋아요 0/1
+    status = models.IntegerField(verbose_name="상태", default=1) # 판매가능 0/1
     def __str__(self):
         return f"{self.idx}_{self.title}"
 
