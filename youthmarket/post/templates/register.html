@@ -58,7 +58,7 @@
                     <form action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div style="width: 300px; margin: 0 auto;">
-                            <div style="text-align: center; width: 100%;"><a style="width: 100%;" href="url" class="btn btn-primary">학교인증</a></div><br>
+                            <div style="text-align: center; width: 100%;"><a style="width: 100%;" href="{% url 'school' %}" class="btn btn-primary">학교인증</a></div><br>
                             <div class="reg-alert" style="display: flex;"> <div style="width: 130px;" >아이디</div> {{ form.userId }}<br/></div><br>
                             <div class="reg-alert" style="display: flex;"> <div style="width: 130px;" >비밀번호</div> {{ form.userPw }}<br/></div><br>
                             <div class="reg-alert" style="display: flex;"> <div style="width: 130px;" >비밀번호 확인</div> {{ form.userRePw }}<br/></div><br>
