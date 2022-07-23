@@ -18,8 +18,9 @@
     {% for chatroom in chatroom_list %}
     <div style="border: solid 3px #ade3ca; border-radius: 8px; margin-left: 25px; margin-right: 25px; ">
         <div style="display: flex;">
-            <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;" >    
-                <input id="chatroom-join" type="button" value="채팅방 입장"/>
+            <div class="atag" style="margin-top: 10px; margin-left: 10px; margin-right: 10px;" >    
+                <!--<input id="chatroom-join" type="button" value="채팅방 입장"/>-->
+                <a>채팅방 입장</a>
                 <h6>채팅방idx: {{ chatroom.idx }}</h6>    
                 <h7>게시글: {{ chatroom.postIdx }}</h7><br>
                 <h7>판매자idx: {{ chatroom.sellerIdx }}</h7><br>
@@ -45,6 +46,7 @@
         </div>
     </nav>
     <script>
+        /*
         document.querySelector('#chatroom-join').onclick = function(e) {
             // var roomName = document.querySelector('#room-name-input').value;
             console.log('my_chatroom_imbuyer.html/#chatroom-join clikcked');
@@ -54,6 +56,32 @@
             // window.location.pathname = '/chat/' + post_idx + '-' + seller_idx + '-' + buyer_idx;
             // http://127.0.0.1:8000/chat/1-1-3 이렇게 url을 쏴줘야 채팅방으로 갈 수 있음
         };
+        */
+        /*
+        fetch("https://reqres.in/api/users?page=2")
+        .then((res) => res.json())
+        .then((data)=> 
+            console.log(data)
+        )
+        */
+        let data="1-1-3/2-2-3";
+        let val = data.split("/");
+        let d=[]
+        //console.log(val.length)
+        for(let i=0;i<val.length;i++){
+            d.push(val[i])
+        }
+
+        let a=document.querySelectorAll(".atag a");
+        console.log(a.length)
+        for(let i=0;i<a.length;i++){
+            a[i].setAttribute('href','http://127.0.0.1:5500/'+d[i])
+        }
+        
+        //a[1].setAttribute('href', 'http://127.0.0.1:5500/' + seller)
+        //console.log(a[0]);
+        //console.log(a[1]);
+
         </script>
 </body>
 {% endblock %}
