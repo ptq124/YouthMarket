@@ -1,3 +1,4 @@
+from dataclasses import field
 from django import forms
 from .models import Icon, User, Post, LikePost, School
 
@@ -21,3 +22,7 @@ class UserModelForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['schoolIdx', 'userId', 'userPw', 'userRePw', 'userName', 'photo']
+class UserSchoolForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['schoolName', 'userName', 'birthday', 'phoneNumber']

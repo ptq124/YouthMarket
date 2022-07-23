@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 # from django.contrib.auth.handlers import make_password, check_password
-from post.models import User
-from post.forms import UserModelForm
+from post.models import User, School, School_User
+from post.forms import UserModelForm, UserSchoolForm
 def login(request):
     response_data = {}
     if request.method == 'POST':
@@ -34,6 +34,33 @@ def logout(request):
     return redirect('login')
 
 def register(request):
+    form = UserModelForm()
+    return render(request, 'register.html', {'form': form})
+
+def school(request):
+    response_data = {}
+    if request.method == 'POST':
+        school_name = request.POST.get('school_name', None) # name
+        user_name = request.POST.get('user_name', None)
+        birthday = request.POST.get('birthday', None)
+        phone_number = request.POST.get('phone_number', None)
+        try:
+            print('school()/try')
+            school_user = School_User.objects.get(userName=user_name, birthday=birthday, phone_number=phone_number)
+            print('school_user: ', school_user)
+            print('school_user.schoolIdx: ', school_user.schoolIdx)
+            if school_name == school_user.schoolIdx:
+                response_data['status_code'] = 200
+                response_data['error'] = '인증이 완료되었습니다.'
+        except:
+            print('school()/exception')
+            response_data['status_code'] = 300
+            response_data['error'] = '학교에 입력한 학생이 존재하지 않습니다.'
+    else:
+        response_data['status_code'] = 201
+    return render(request, 'school.html', {'response_data': response_data})
+
+def afterschool(request):
     if request.method == "POST" or request.method == "FILES":
         print('request.method: ', request.method)
         print('request.method.POST: ', request.POST)
@@ -47,12 +74,10 @@ def register(request):
                 unfinished = form.save(commit=False)
                 unfinished.photo = "/icons/user_default.PNG" 
                 unfinished.save()
-            # form.save()
             else:
                 form.save()
             return redirect('login')
     else:
         form = UserModelForm()
-        print('register()/GET/form: ', form)
-    return render(request, 'register.html', {'form': form})
-
+        print('afterschool()/GET/form: ', form)
+    return render(request, 'afterschool.html', {'form': form})
