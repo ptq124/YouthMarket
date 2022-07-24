@@ -1,6 +1,7 @@
 from dataclasses import field
+from attr import fields
 from django import forms
-from .models import Icon, User, Post, LikePost, School
+from .models import Icon, User, Post, LikePost, School, Community
 
 class IconForm(forms.Form):
     title = forms.CharField()
@@ -26,3 +27,7 @@ class UserSchoolForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['schoolName', 'userName', 'birthday', 'phoneNumber']
+class CommunityModelForm(forms.ModelForm):
+    class Meta:
+        model = Community
+        fields = ['title', 'text']
