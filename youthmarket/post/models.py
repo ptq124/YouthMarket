@@ -21,7 +21,7 @@ class School(models.Model):
     createdDate = models.DateTimeField(auto_now_add=True, verbose_name="생성시간") # School row가 생성된 시간
     updatedDate = models.DateTimeField(blank=True, null=True, verbose_name="수정시간") # 수정된 시간
     def __str__(self):
-        return f"{self.idx}_{self.schoolName}"
+        return f"{self.schoolName}"
 class User(models.Model):
     idx = models.AutoField(auto_created=True, primary_key=True, verbose_name="idx")
     schoolIdx = models.ForeignKey(School,to_field="idx", on_delete=models.DO_NOTHING, verbose_name="학교idx")
@@ -42,7 +42,7 @@ class User(models.Model):
     phoneNumber = models.CharField(max_length=20, null=True, blank=True, verbose_name="전화번호")
     schoolName = models.CharField(max_length=50, null=True, blank=True, verbose_name="학교이름")
     def __str__(self):
-        return f"{self.idx}_{self.userName}"
+        return f"{self.userName}"
 
 class School_User(models.Model):
     idx = models.AutoField(auto_created=True, primary_key=True, verbose_name="idx")
@@ -61,7 +61,7 @@ class Category(models.Model):
     category = models.CharField(max_length=10, verbose_name="카테고리명")
     # ex. 가전제품, 식음료
     def __str__(self):
-        return str(self.idx)+'_'+str(self.category)
+        return str(self.category)
 
 class Post(models.Model):
     idx = models.AutoField(auto_created=True, primary_key=True, verbose_name="idx")
@@ -78,7 +78,7 @@ class Post(models.Model):
     like = models.IntegerField(verbose_name="좋아요상태", default=0) # 좋아요 0/1
     status = models.IntegerField(verbose_name="상태", default=1) # 판매가능 0/1
     def __str__(self):
-        return f"{self.idx}_{self.title}"
+        return f"{self.title}"
 
 # 없어도 될것같다.
 # class PostView(models.Model):
@@ -110,9 +110,9 @@ class LikePost(models.Model):
     idx = models.AutoField(auto_created=True, primary_key=True, verbose_name="idx")
     userIdx = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="사용자idx")
     postIdx = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name="게시글idx")
-    status = models.BooleanField(verbose_name="상태", default=False) # 좋아요 on/off -> True, False
+    like = models.IntegerField(verbose_name="상태", default=0) # 좋아요 1/0 -> on/off
     def __str__(self):
-        return f"{self.idx}_{self.userIdx}_{self.postIdx}_{self.status}"
+        return f"{self.idx}_{self.userIdx}_{self.postIdx}"
 
 # 테스트용(https://www.youtube.com/watch?v=xrKKRRC518Y)
 class Msg(models.Model):
@@ -136,3 +136,15 @@ class Message(models.Model):
 
     def last_10_messages(chatroomIdx):
         return Message.objects.filter(chatroomIdx = chatroomIdx).order_by('-timestamp').all()[:10] # ASC
+    
+class Community(models.Model):
+    idx = models.AutoField(auto_created=True, primary_key=True, verbose_name="idx")
+    userIdx = models.ForeignKey(User, related_name="user_idx", on_delete=models.CASCADE, verbose_name="저자")
+    title = models.CharField(max_length=256 ,verbose_name="제목")
+    photo = models.ImageField(null=True, blank=True, upload_to='communities')
+    text = models.TextField(verbose_name="내용")
+    count = models.IntegerField(null=False, default=0, verbose_name="방문자 수")
+    createdDate = models.DateTimeField(auto_now_add=True, verbose_name="생성시간") # chatRoom 생성된 시간
+    updatedDate = models.DateTimeField(blank=True, null=True, verbose_name="수정시간") # 수정된 시간
+    def __str__(self):
+        return str(self.idx)

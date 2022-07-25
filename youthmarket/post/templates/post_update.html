@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block contents %}
+<!-- About Section-->
+<section class="page-section bg-primary text-white mb-0" id="about" style="padding: 2rem 0;">
+    <div class="container" style="margin-top: 10px;">
+        <!-- About Section Heading-->
+        <h2 class="page-section-heading text-center text-uppercase text-white" style="font-size: 1.75rem;">판매글 수정</h2>
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- About Section Content-->
+        <div class="row">
+            <form action="" method="POST" enctype="multipart/form-data" style="margin: 0 auto; width: 100%;">
+                {% csrf_token %}
+                <table style="border: solid white 2px;">
+                    
+                    <div style="width: 100px; margin: 0 auto; margin-bottom: 20px;"><img src="{{ post.photo.url }}" style="width: 100px; border-radius: 8px; margin: 0 auto;"/></div>
+                    <div id="title" style="margin-left: 30px;">제목<input type="text" name="title" value="{{post.title}}" style="width: 70%; margin-left: 5px; border-radius: 8px;"/></div><br>
+                    <div id="text" style="margin-left: 30px;">내용<textarea name="text" style="width: 70%; height: 180px; border-radius: 8px; margin-left: 5px;">{{ post.text }}</textarea></div><br>
+                    <div id="price" style="margin-left: 30px;">금액<input type="text" name="price" value="{{ post.price }}"  style="width: 70%;  margin-left: 5px; border-radius: 8px;"/></div><br>
+                    <div id="categoryIdx" style="margin-left: 30px;">카테고리<select name="categoryIdx" style=" margin-left: 5px; border-radius: 8px;">
+                        <option value="1">---------</option>
+                        <option value="1">디지털기기</option>
+                        <option value="2">생활/가공식품</option>
+                        <option value="3">스포츠/레저</option>
+                        <option value="4">여성잡화</option>
+                        <option value="5">남성잡화</option>
+                        <option value="6">남성의류</option>
+                        <option value="7">여성의류</option>
+                        <option value="8">게임</option>
+                        <option value="9">취미</option>
+                        <option value="10">아이돌굿즈</option>
+                        <option value="11">뷰티/미용</option>
+                        <option value="12">반려동물용품</option>
+                        <option value="13">도서</option>
+                        <option value="14">티켓/음반</option>
+                        <option value="15">기타중고물품</option>
+                        <option value="16">식물</option>
+                    </select></div><br>
+                    <div id="photo" style="margin-left: 20px;"><input type="file" name="photo"/></div><br>
+                   
+
+
+                    
+
+                    <!-- # dict로 전달 받은 객체를 table형태로 보여줌 .as_p 도 잇음 -->
+                </table>
+                <div style="width: 200px; margin: 0 auto;"><button class="btn btn-primary btn-xl" id="submitButton" style="background-color: #e5fff3; color:black; width: 200px;" type="submit">수정</button></div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- <table> -->
+<!-- {{ form.as_table }}  -->
+<!-- # dict로 전달 받은 객체를 table형태로 보여줌 .as_p 도 잇음 -->
+<!-- </table> -->
+
+
+
+<!-- Footer-->
+<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-bottom" style="background-color: #e5fff3;"
+    id="mainNav">
+    <div class="container" style="background-color: #e5fff3;">
+
+
+        <div class="col-lg-4" style="background-color: #e5fff3; ">
+            <a class="btn btn-social mx-1" href="{% url 'main' %}"><img class="img-fluid"
+                    src="../../static/assets/Vector.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png"
+                    alt="..." /></a>
+            <a class="btn btn-social mx-1" href="{% url 'create_post' %}"><img class="img-fluid"
+                    src="../../static/assets/Plus.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png"
+                    alt="..." /></a>
+            <a class="btn btn-social mx-1" href="{% url 'my_detail' %}"><img class="img-fluid"
+                    src="../../static/assets/Person.png" alt="..." /></a>
+
+        </div>
+    </div>
+</nav>
+<script>
+
+</script>
+{% endblock %}
