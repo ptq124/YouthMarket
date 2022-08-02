@@ -168,7 +168,6 @@ def my_chat_imseller(request):
     return render(request, 'my_chatroom_imseller.html', {'chatroom_list': chatroom_list, 'user': user, 'chatroom_info': mark_safe(json.dumps(chatroom_info))})
 def update_post(request, post_id):
     pass
-
 def like(request):
     idx = request.session.get('user') 
     if idx == None:
@@ -190,7 +189,67 @@ def like(request):
     post_final_list = Post.objects.filter(idx__in=post_list)
     print('like()/post_lis: ', post_final_list)
     return render(request, 'like.html', {'post_final_list': post_final_list, 'user_info': user})
+def like(request):
+    idx = request.session.get('user') 
+    print('my_chat_imsller/idx: ', idx)
+    if idx == None:
+        return redirect('login')
+    user = get_object_or_404(User, idx=idx)
+    posts = Post.objects.filter().all();
+    post_list = []
+    for i in range(len(posts)):
+        try:
+            like_post = LikePost.objects.get(userIdx = user, like = 1)
+            print('like_post.postIdx: ', like_post.postIdx)
+            post = get_object_or_404(Post, title=str(like_post.postIdx).split('_')[1])
+            print('post: ',post)
+            post_list.append(post.idx)
+        except:
+            continue
+    print('post_list: ', post_list)
+    post_final_list = Post.objects.filter(idx__in=post_list)
+    print('like()/post_lis: ', post_final_list)
+    return render(request, 'like.html', {'post_final_list': post_final_list, 'user_info': user})
 
+
+# 커뮤니티 생성
+def create_community(request):
+    idx = request.session.get('user') 
+    print('my_chat_imsller/idx: ', idx)
+    if idx == None:
+        return redirect('login')
+    user = get_object_or_404(User, idx=idx)
+    if request.method == 'POST':
+        form = CommunityModelForm(request.POST)
+        if form.is_valid():
+            unfinished = form.save(commit=False)
+            unfinished.userIdx = user
+            unfinished.save()
+            return redirect('community')
+    else:
+        form = CommunityModelForm()
+    return render(request, 'create_community.html',{'form': form})
+
+# 모든 커뮤니티 랜더링
+def community(request):
+    idx = request.session.get('user') 
+    print('my_chat_imsller/idx: ', idx)
+    user = get_object_or_404(User, idx=idx)
+    if idx == None:
+        return redirect('login')
+    communities = Community.objects.filter().order_by('-createdDate') #DESC
+    return render(request, 'community.html', {'communities': communities, 'user': user})
+    
+
+def detail_community(request, com_id):
+    idx = request.session.get('user') 
+    print('my_chat_imsller/idx: ', idx)
+    user = get_object_or_404(User, idx=idx)
+    if idx == None:
+        return redirect('login')
+    community = get_object_or_404(Community, idx=com_id)
+    return render(request, 'detail_community.html', {'community': community, 'user': user})
+    
 
 # 커뮤니티 생성
 def create_community(request):

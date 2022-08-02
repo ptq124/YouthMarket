@@ -55,7 +55,6 @@
     </div>
 </div>
 <div style="display: flex; width: 80%;"><input id="message-input" type="text" style="width: 400px; margin-left: 30px;" placeholder="메세지를 입력하세요..." />
-       
     <div style="width: 100px; margin: 0 auto;"><button class="submit" id ="message_submit_clear" onclick="clear()"> 전송<i class="fa fa-paper-plane" aria-hidden="true"></i></button></div>
 </div>
 <!-- Footer-->
@@ -81,23 +80,12 @@
 </nav>
 
 <body>
-
     <script>
         var subs = document.getElementById("message-input");
-
-        function clear() {
-            
-            subs.innerText="";
-            
-        
+        function clear() {     
+            subs.innerText="";      
         }
-
-        
-
-
-        
     </script>
 
 </body>
-
 {% endblock %}
