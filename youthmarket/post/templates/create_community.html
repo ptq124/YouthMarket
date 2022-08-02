@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block contents %}
 <!-- About Section-->
-<section class="page-section bg-primary text-white mb-0" id="about" style="padding: 2rem 0;">
+<section class="page-section bg-primary text-white mb-0" id="about" style="padding: 2rem 0; height: 100vh;">
 	<div class="container" style="margin-top: 10px;">
 		<!-- About Section Heading-->
 		<h2 class="page-section-heading text-center text-uppercase text-white" style="font-size: 1.75rem;">커뮤니티글 작성</h2>
@@ -21,12 +21,13 @@
 					<p>
 						<div style="margin-left: 30px;">제목 {{ form.title }}</div><br>
 						<div style="margin-left: 30px;">내용 {{ form.text }}</div><br>
+						<div style="margin-left: 30px;">이미지 {{ form.photo }}</div><br>
 						
 					</p>
 					
 					<!-- # dict로 전달 받은 객체를 table형태로 보여줌 .as_p 도 잇음 -->
 				</table>
-				<button class="btn btn-primary btn-xl" id="submitButton" style="background-color: #e5fff3; color:black; width: 200px;" type="submit">업로드</button>
+				<div style="width: 200px; margin: 0 auto;"><button class="btn btn-primary btn-xl" id="submitButton" style="background-color: #e5fff3; color:black; width: 200px;" type="submit">업로드</button></div>
 			</form>
 		</div>
 	</div>
@@ -45,9 +46,9 @@
 
         <div class="col-lg-4" style="background-color: #e5fff3; ">
             <a class="btn btn-social mx-1" href="{% url 'main' %}"><img class="img-fluid" src="../../static/assets/Vector.png" alt="..." /></a>
-            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="{% url 'community' %}"><img class="img-fluid" src="../../static/assets/Building.png" alt="..." /></a>
             <a class="btn btn-social mx-1" href="{% url 'create_post' %}"><img class="img-fluid" src="../../static/assets/Plus.png" alt="..." /></a>
-            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png" alt="..." /></a>
+            <a class="btn btn-social mx-1" href="{% url 'my_chat_imbuyer' %}"><img class="img-fluid" src="../../static/assets/Chatdots.png" alt="..." /></a>
             <a class="btn btn-social mx-1" href="{% url 'my_detail' %}"><img class="img-fluid" src="../../static/assets/Person.png" alt="..." /></a>
             
         </div>

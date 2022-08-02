@@ -12,23 +12,43 @@
         </div>
         <!-- About Section Content-->
         <div class="row">
-            <form action="" method="POST" enctype="multipart/form-data" style="margin: 0 auto;">
+            <form action="" method="POST" enctype="multipart/form-data" style="margin: 0 auto; width: 100%;">
                 {% csrf_token %}
                 <table style="border: solid white 2px;">
-                    <p>
-                    <div id="title" style="margin-left: 30px;">제목 {{ form.title }}</div><br>
-                    <div id="text" style="margin-left: 30px;">내용 {{ form.text }}</div><br>
-                    <div id="price" style="margin-left: 30px;">금액 {{ form.price }}</div><br>
-                    <div id="categoryIdx" style="margin-left: 30px;">카테고리 {{ form.categoryIdx }}</div><br>
-                    <div id="photo" style="margin-left: 20px;">물품 이미지 {{ form.photo }}</div><br>
+                    
+                    <div style="width: 100px; margin: 0 auto; margin-bottom: 20px;"><img src="{{ post.photo.url }}" style="width: 100px; border-radius: 8px; margin: 0 auto;"/></div>
+                    <div id="title" style="margin-left: 30px;">제목<input type="text" name="title" value="{{post.title}}" style="width: 70%; margin-left: 5px; border-radius: 8px;"/></div><br>
+                    <div id="text" style="margin-left: 30px;">내용<textarea name="text" style="width: 70%; height: 180px; border-radius: 8px; margin-left: 5px;">{{ post.text }}</textarea></div><br>
+                    <div id="price" style="margin-left: 30px;">금액<input type="text" name="price" value="{{ post.price }}"  style="width: 70%;  margin-left: 5px; border-radius: 8px;"/></div><br>
+                    <div id="categoryIdx" style="margin-left: 30px;">카테고리<select name="categoryIdx" style=" margin-left: 5px; border-radius: 8px;">
+                        <option value="1">---------</option>
+                        <option value="1">디지털기기</option>
+                        <option value="2">생활/가공식품</option>
+                        <option value="3">스포츠/레저</option>
+                        <option value="4">여성잡화</option>
+                        <option value="5">남성잡화</option>
+                        <option value="6">남성의류</option>
+                        <option value="7">여성의류</option>
+                        <option value="8">게임</option>
+                        <option value="9">취미</option>
+                        <option value="10">아이돌굿즈</option>
+                        <option value="11">뷰티/미용</option>
+                        <option value="12">반려동물용품</option>
+                        <option value="13">도서</option>
+                        <option value="14">티켓/음반</option>
+                        <option value="15">기타중고물품</option>
+                        <option value="16">식물</option>
+                    </select></div><br>
+                    <div id="photo" style="margin-left: 20px;"><input type="file" name="photo"/></div><br>
+                   
 
 
-                    </p>
+                    
 
                     <!-- # dict로 전달 받은 객체를 table형태로 보여줌 .as_p 도 잇음 -->
                 </table>
-                <button class="btn btn-primary btn-xl" id="submitButton"
-                    style="background-color: #e5fff3; color:black; width: 200px;" type="submit">업로드</button>
+                <div style="width: 200px; margin: 0 auto;"><button class="btn btn-primary btn-xl" id="submitButton" style="background-color: #e5fff3; color:black; width: 200px;" type="submit">수정</button></div>
+
             </form>
         </div>
     </div>
@@ -62,12 +82,6 @@
     </div>
 </nav>
 <script>
-    document.getElementById("#title").innerText={{}};
-    document.getElementById("#text").innerText={{}};
-    document.getElementById("#price").innerText = {{ }};
-    document.getElementById("#categoryIdx").innerText = {{ }};
-    document.getElementById("#photo").innerText = {{ }};
-
 
 </script>
 {% endblock %}

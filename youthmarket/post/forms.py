@@ -30,4 +30,4 @@ class UserSchoolForm(forms.ModelForm):
 class CommunityModelForm(forms.ModelForm):
     class Meta:
         model = Community
-        fields = ['title', 'text']
+        fields = ['title', 'text', 'photo']

@@ -8,15 +8,16 @@
         <img src="http://127.0.0.1:8000/media/icons/user_default.PNG" style="width: 80px; height: 100px;">
         {% endif %} -->
         <img src="{{ user.photo.url }}" style="width: 80px; height: 100px;">
-        안녕하세요 {{ user.userName }} 님!
+        {{ user.userName }} 님
         (학교idx: {{ user.schoolIdx }})
     </p>
-    <a href="{% url 'my_chat_imbuyer' %}">내가 구매자인 채팅방</a>|
-    <a href="{% url 'my_chat_imseller' %}">내가 판매자인 채팅방</a>
+    <div style="margin: 0 auto; width: 300px; display: flex; justify-content: space-evenly;">
+        <div class="page-section-heading text-center text-uppercase text-white" style="font-size: 25px; width: 120px ; color:#9e9e9e;"><a href="{% url 'my_chat_imbuyer' %}"  style="color: #9e9e9e; text-decoration: none;">구매 채팅</a></div>
+        <div class="page-section-heading" style="color: #1abc9c; font-size: large;">|</div>
+        <div class="page-section-heading text-center" style="width: 120px ; font-size: 25px; color: #1abc9c;" ><a href="{% url 'my_chat_imseller' %}" style="color: #1abc9c; text-decoration: none;">판매 채팅</a></div>
+    </div>
+    
     <div id="app">
-        <div class="topIcon">
-            <img src="../../static/assets/smalllogo.png" alt="로고">
-        </div>
     </div>
     <br>
     <br>
@@ -24,13 +25,11 @@
     <div style="border: solid 3px #ade3ca; border-radius: 8px; margin-left: 25px; margin-right: 25px; ">
         <div style="display: flex;">
             <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;" >    
-                <input id="chatroom-join" type="button" value="채팅방 입장"/>
-                <h6>채팅방idx: {{ chatroom.idx }}</h6>    
+                <a class="chatA">채팅방 입장</a><br>
                 <h7>게시글: {{ chatroom.postIdx }}</h7><br>
-                <h7>판매자idx: {{ chatroom.sellerIdx }}</h7><br>
-                <h7>구매자idx: {{ chatroom.buyerIdx }}</h7><br>
-                <h7>생성된날짜: {{ chatroom.createdDate }}  </h7><br>
-                
+                <h7>판매자: {{ chatroom.sellerIdx }}</h7><br>
+                <h7>구매자: {{ chatroom.buyerIdx }}</h7><br>
+                <h7>생성일: {{ chatroom.createdDate }}  </h7><br>              
             </div>
         </div>
     </div>
@@ -51,14 +50,13 @@
         </div>
     </nav>
     <script>
-        document.querySelector('#chatroom-join').onclick = function(e) {
-            // var roomName = document.querySelector('#room-name-input').value;
-            console.log('my_chatroom_imbuyer.html/#chatroom-join clikcked');
-            // var post_idx = {{ post_detail.idx }};
-            // var seller_idx = {{ sellerInfo.idx }};
-            // var buyer_idx = {{ myInfo.idx }};
-            // window.location.pathname = '/chat/' + post_idx + '-' + seller_idx + '-' + buyer_idx;
-        };
-        </script>
+        var chatroom_info = {{ chatroom_info }}; // 2-2-3_1-1-3
+        var a = chatroom_info.split('/');
+        let s=document.querySelectorAll(".chatA");
+        console.log(s);
+        for(let i=0;i<s.length;i++){
+            s[i].setAttribute("href","http://127.0.0.1:8000/chat/"+a[i])
+        }   
+    </script>
 </body>
 {% endblock %}

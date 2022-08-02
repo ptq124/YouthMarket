@@ -4,18 +4,17 @@
 <header class="masthead bg-primary text-white text-center"
     style="padding-top: calc(1rem + 10px); padding-bottom: 1rem;">
     <div class="container d-flex align-items-center flex-column">
+        <img src="{{ community.photo.url }}" alt="" style="border-radius: 10px; margin-left: 30px; width: 150px; height: 100px;">
         <h1 class="masthead-heading text-uppercase mb-0" style="font-size: 1.75rem;">{{ community.title }}</h1>
 
     </div>
 </header>
 <div class="container" style="margin-top: 50px;">
     <div style="display: flex;">
-        <img src="{{ user.photo.url }}" alt="" style="border-radius: 60px; margin-left: 30px; height: 100px;">
+        <img src="{{ writer.photo.url }}" alt="" style="border-radius: 60px; margin-left: 30px; width: 80px; height: 100px;">
         <h2
             style="height: 38px; border: solid 3px #ade3ca; padding: 5 5 5 5; border-radius: 8px; margin-top: 30px; margin-left: 20px;">
-            {{ user.userName }}</h2>
-        <i class="bi bi-heart"
-            style="color: red; display: flex; align-items: center; margin-left: 10px; font-size:2.5rem;"></i>
+            {{ writer.userName }}</h2>
     </div>
 </div>
 
@@ -45,16 +44,18 @@
 </section>
 <!-- btn-->
 <div class="container">
-    <div class="form-floating mb-3 navbar" style="margin: 0 auto;">
-        <a class="btn btn-primary btn-xl" style="width: 150px;" href="{% url 'main' %}">목록</a>
-        {% if status_code == 200 %}
-        <input class="btn btn-primary btn-xl " style="width: 150px;" id="room-name-submit" type="button" value="채팅하기" />
-        <!--<a class="btn btn-primary btn-xl" style="width: 150px;" href="http://127.0.0.1:8000/chat"+multiIdx>채팅하기</a>-->
-        {% else %}
-        <!--<input class="btn btn-primary btn-xl " style="width: 150px;" id="post-update" type="button" value="수정하기"/> -->
-        <a class="btn btn-primary btn-xl" style="width: 150px;" href="{% url 'update_post' post_detail.idx %}">수정하기</a>
-        {% endif %}
+    <div style="width: 150px; margin: 0 auto;">
+        <a class="btn btn-primary btn-xl" style="width: 150px;" href="{% url 'community' %}">목록</a>
+    <br/>
+    <br/>
+    
+    <div class="message-input" >
+    
     </div>
+    </div>
+</div>
+<div style="display: flex; width: 80%;"><input id="message-input" type="text" style="width: 400px; margin-left: 30px;" placeholder="메세지를 입력하세요..." />
+    <div style="width: 100px; margin: 0 auto;"><button class="submit" id ="message_submit_clear" onclick="clear()"> 전송<i class="fa fa-paper-plane" aria-hidden="true"></i></button></div>
 </div>
 <!-- Footer-->
 <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-bottom" style="background-color: #e5fff3;"
@@ -65,11 +66,11 @@
         <div class="col-lg-4" style="background-color: #e5fff3; ">
             <a class="btn btn-social mx-1" href="{% url 'main' %}"><img class="img-fluid"
                     src="../../static/assets/Vector.png" alt="..." /></a>
-            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png"
+            <a class="btn btn-social mx-1" href="{% url 'community' %}"><img class="img-fluid" src="../../static/assets/Building.png"
                     alt="..." /></a>
             <a class="btn btn-social mx-1" href="{% url 'create_post' %}"><img class="img-fluid"
                     src="../../static/assets/Plus.png" alt="..." /></a>
-            <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png"
+            <a class="btn btn-social mx-1" href="{% url 'my_chat_imbuyer' %}"><img class="img-fluid" src="../../static/assets/Chatdots.png"
                     alt="..." /></a>
             <a class="btn btn-social mx-1" href="{% url 'my_detail' %}"><img class="img-fluid"
                     src="../../static/assets/Person.png" alt="..." /></a>
@@ -80,67 +81,11 @@
 
 <body>
     <script>
-        var roomName = {{ post_detail.idx }};
-        var i = {{ like }};
-        var myInfoIdx = {{ myInfo.idx }};
-        var sellerIdx = {{ sellerInfo.idx }};
-        var status_code = {{ status_code }};
-        var multiIdx = roomName + '-' + sellerIdx + '-' + myInfoIdx;
-        console.log('before multiIdx: ', multiIdx);
-
-        console.log('after multiIdx: ', multiIdx);
-        console.log('i: ', i);
-        console.log('type i: ', typeof (i));
-        console.log('multiIdx: ', multiIdx);
-        if (i == 1) {
-            document.querySelector("i").classList.remove('bi-heart');
-            document.querySelector("i").classList.add('bi-heart-fill');
+        var subs = document.getElementById("message-input");
+        function clear() {     
+            subs.innerText="";      
         }
-        else if (i == 0) {
-            document.querySelector("i").classList.remove('bi-heart-fill');
-            document.querySelector("i").classList.add('bi-heart');
-        }
-
-        if (status_code == 200) {
-            document.querySelector('#room-name-submit').onclick = function (e) {
-                // var roomName = document.querySelector('#room-name-input').value;
-                console.log('post_detail.idx: ', {{ post_detail.idx }});
-
-            console.log('room-name-submit()/multiIdx: ', multiIdx);
-            window.location.pathname = '/chat/' + multiIdx;
-        };
-    }
-    else {
-            //document.querySelector('#post-update').onclick = function(e) {
-            // var roomName = document.querySelector('#room-name-input').value;
-            console.log('#post-update onclick')
-            // window.location.pathname = '/chat/' + multiIdx + '/';
-            //};
-        }
-        document.querySelector("i").addEventListener("click", function (event) {
-            if (i == 0) {
-                this.classList.remove('bi-heart');
-                this.classList.add('bi-heart-fill');
-                i++;
-            }
-            else if (i == 1) {
-                this.classList.remove('bi-heart-fill');
-                this.classList.add('bi-heart');
-                i--;
-            }
-            console.log('after i: ', i)
-            fetch("http://127.0.0.1:8000/detail-post/" + roomName, {
-                method: 'post',
-                headers: { "X-CSRFToken": '{{csrf_token}}' },
-                body: JSON.stringify({
-                    like: i
-                })
-            })
-                .then(res => {
-                    console.log(res)
-                })
-        })
-
     </script>
+
 </body>
 {% endblock %}

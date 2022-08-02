@@ -6,14 +6,17 @@ import json
 from django.utils.safestring import mark_safe
 
 def main(request):
-    # request.session.pop('user')
     idx = request.session.get('user') 
     print('main()/idx: ', idx)
     if idx == None:
         return redirect('login')
     print('main()')
-    posts = Post.objects.filter().order_by('-createdDate') #DESC
-    user = get_object_or_404(User, idx = idx)
+    user = get_object_or_404(User, idx=idx)
+    print('user.schoolIdx: ', user.schoolIdx) # 홀수고등학교
+    # school = get_object_or_404(School, schoolName = str(user.schoolIdx).split('_')[1]) # /홀수고등학교
+    school = get_object_or_404(School, schoolName = user.schoolIdx) # 홀수고등학교
+    print('scol: ', school)
+    posts = Post.objects.exclude(sellerIdx = user).filter(sellerIdx__schoolIdx = school).order_by('-createdDate') #DESC
     # sellers = User.objects.filter(pk=posts.sellerIdx) 판매자이름을 posts에서 접근가능하게 어떻게 할까? 그냥 sellerName을 Post에 넣어버릴까?
     return render(request, 'main_b.html', {'posts': posts, 'user': user})
 
@@ -84,7 +87,8 @@ def my_post(request):
         return redirect('login')
     user_idx = request.session.get('user') # 현재 접속중인 user의 idx를 의미(1: 고경환1, 2: 고경환2)
     posts = Post.objects.filter(sellerIdx = user_idx).order_by('-createdDate') #DESC
-    return render(request, 'my_post_b.html', {'posts': posts, 'user_idx': user_idx})
+    user = get_object_or_404(User, idx = user_idx)
+    return render(request, 'my_post_b.html', {'posts': posts, 'user': user})
 
 def my_detail(request):
     idx = request.session.get('user') 
@@ -106,13 +110,13 @@ def my_chat_imbuyer(request):
     chatroom_info = '' # 1-1-3/2-2-3
     for i in range(len(chatroom_list)):
         print('imseller()/chatroom_list[i]:', chatroom_list[i].postIdx)
-        print('a: ', str(chatroom_list[i].postIdx).split('_')[1])
-        temp_post = get_object_or_404(Post, title=str(chatroom_list[i].postIdx).split('_')[1])
-        temp_seller = get_object_or_404(User, userName=str(chatroom_list[i].sellerIdx).split('_')[1])
-        temp_buyer = get_object_or_404(User, userName=str(chatroom_list[i].buyerIdx).split('_')[1])
-        # temp_post = get_object_or_404(Post, title=str(chatroom_list[i].postIdx))
-        # temp_seller = get_object_or_404(User, userName=str(chatroom_list[i].sellerIdx))
-        # temp_buyer = get_object_or_404(User, userName=str(chatroom_list[i].buyerIdx))
+        # print('chatroom_list[i].postIdx: ', str(chatroom_list[i].postIdx).split('_')[1])
+        # temp_post = get_object_or_404(Post, title=str(chatroom_list[i].postIdx).split('_')[1])
+        # temp_seller = get_object_or_404(User, userName=str(chatroom_list[i].sellerIdx).split('_')[1])
+        # temp_buyer = get_object_or_404(User, userName=str(chatroom_list[i].buyerIdx).split('_')[1])
+        temp_post = get_object_or_404(Post, title=str(chatroom_list[i].postIdx))
+        temp_seller = get_object_or_404(User, userName=str(chatroom_list[i].sellerIdx))
+        temp_buyer = get_object_or_404(User, userName=str(chatroom_list[i].buyerIdx))
         print('temp_post: ', temp_post)
         print('temp_post.idx: ', temp_post.idx)
         print('temp_seller: ', temp_seller)
@@ -141,13 +145,13 @@ def my_chat_imseller(request):
     print('------------------------')
     for i in range(len(chatroom_list)):
         print('imseller()/chatroom_list[i]:', chatroom_list[i].postIdx)
-        print('a: ', str(chatroom_list[i].postIdx).split('_')[1])
-        temp_post = get_object_or_404(Post, title=str(chatroom_list[i].postIdx).split('_')[1])
-        temp_seller = get_object_or_404(User, userName=str(chatroom_list[i].sellerIdx).split('_')[1])
-        temp_buyer = get_object_or_404(User, userName=str(chatroom_list[i].buyerIdx).split('_')[1])
-        # temp_post = get_object_or_404(Post, title=str(chatroom_list[i].postIdx))
-        # temp_seller = get_object_or_404(User, userName=str(chatroom_list[i].sellerIdx))
-        # temp_buyer = get_object_or_404(User, userName=str(chatroom_list[i].buyerIdx))
+        # print('chatroom_list[i].postIdx: ', str(chatroom_list[i].postIdx).split('_')[1])
+        #temp_post = get_object_or_404(Post, title=str(chatroom_list[i].postIdx).split('_')[1])
+        #temp_seller = get_object_or_404(User, userName=str(chatroom_list[i].sellerIdx).split('_')[1])
+        #temp_buyer = get_object_or_404(User, userName=str(chatroom_list[i].buyerIdx).split('_')[1])
+        temp_post = get_object_or_404(Post, title=str(chatroom_list[i].postIdx))
+        temp_seller = get_object_or_404(User, userName=str(chatroom_list[i].sellerIdx))
+        temp_buyer = get_object_or_404(User, userName=str(chatroom_list[i].buyerIdx))
         print('temp_post: ', temp_post)
         print('temp_post.idx: ', temp_post.idx)
         print('temp_seller: ', temp_seller)
@@ -164,7 +168,27 @@ def my_chat_imseller(request):
     return render(request, 'my_chatroom_imseller.html', {'chatroom_list': chatroom_list, 'user': user, 'chatroom_info': mark_safe(json.dumps(chatroom_info))})
 def update_post(request, post_id):
     pass
-
+def like(request):
+    idx = request.session.get('user') 
+    if idx == None:
+        return redirect('login')
+    user = get_object_or_404(User, idx=idx)
+    posts = Post.objects.filter().all()
+    post_list = []
+    for i in range(len(posts)):
+        try:
+            like_post = LikePost.objects.get(userIdx = user, like = 1)
+            print('like_post.postIdx: ', like_post.postIdx)
+            # post = get_object_or_404(Post, title=str(like_post.postIdx).split('_')[1])
+            post = get_object_or_404(Post, title=like_post.postIdx)
+            print('post: ',post)
+            post_list.append(post.idx)
+        except:
+            continue
+    print('post_list: ', post_list)
+    post_final_list = Post.objects.filter(idx__in=post_list)
+    print('like()/post_lis: ', post_final_list)
+    return render(request, 'like.html', {'post_final_list': post_final_list, 'user_info': user})
 def like(request):
     idx = request.session.get('user') 
     print('my_chat_imsller/idx: ', idx)
@@ -227,6 +251,67 @@ def detail_community(request, com_id):
     return render(request, 'detail_community.html', {'community': community, 'user': user})
     
 
+# 커뮤니티 생성
+def create_community(request):
+    idx = request.session.get('user') 
+    if idx == None:
+        return redirect('login')
+    user = get_object_or_404(User, idx=idx)
+    if request.method == 'POST':
+        form = CommunityModelForm(request.POST)
+        if form.is_valid():
+            unfinished = form.save(commit=False)
+            unfinished.userIdx = user
+            unfinished.save()
+            return redirect('community')
+    else:
+        form = CommunityModelForm()
+    return render(request, 'create_community.html', {'form': form})
+
+# 모든 커뮤니티 랜더링
+def community(request):
+    idx = request.session.get('user') 
+    user = get_object_or_404(User, idx=idx)
+    if idx == None:
+        return redirect('login')
+    user = get_object_or_404(User, idx=idx)
+    print('user.schoolIdx: ', user.schoolIdx) # 홀수고등학교
+    # school = get_object_or_404(School, schoolName = str(user.schoolIdx).split('_')[1]) # 홀수고등학교
+
+    school = get_object_or_404(School, schoolName = user.schoolIdx) # 홀수고등학교
+
+    print('school: ', school)
+    communities = Community.objects.exclude(userIdx = user).filter(userIdx__schoolIdx = school).order_by('-createdDate') #DESC
+    # communities = Community.objects.filter().order_by('-createdDate') #DESC
+    return render(request, 'community.html', {'communities': communities, 'user': user})
+    
+
+def detail_community(request, com_id):
+    idx = request.session.get('user') 
+    user = get_object_or_404(User, idx=idx)
+    if idx == None:
+        return redirect('login')
+    community = get_object_or_404(Community, idx=com_id)
+    community.count += 1
+    community.save()
+    writer = community.userIdx
+    return render(request, 'detail_community.html', {'community': community, 'writer': writer})
+
+def my_community(request):
+    idx = request.session.get('user') 
+    user = get_object_or_404(User, idx=idx)
+    if idx == None:
+        return redirect('login')
+    user = get_object_or_404(User, idx=idx)
+    communities = Community.objects.filter(userIdx = user)
+    return render(request, 'my_community.html', {'communities': communities, 'user': user})
+
+def school(request):
+    if request.method == 'POST':
+        print('post/post')
+    else:
+        print('post/get')
+    pass
 
 
 def upload_icon(request):

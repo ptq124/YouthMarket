@@ -7,44 +7,17 @@
             {% else %}
             <img src="http://127.0.0.1:8000/media/icons/user_default.PNG" style="width: 80px; height: 100px;">
             {% endif %} -->
-            <img src="{{ user.photo.url }}" style="width: 80px; height: 100px;">
-            안녕하세요 {{ user.userName }} 님!
-            (학교idx: {{ user.schoolIdx }})
+            <img src="{{ user.photo.url }}" style="width: 80px; height: 100px; border-radius: 10px;">
+            안녕하세요 {{ user.userName }} 님!<br>
+            (소속: {{ user.schoolIdx }})
         </p>
-        <div id="app">
-            <div class="topIcon">
-                <img src="../../static/assets/smalllogo.png" alt="로고">
-            </div>
-            <div class="main-page">
-                <div class="main-page__input">
-                    <!--<form>
-                        <input id="main--input" type="text">
-                        <button id="main--btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </form>-->
-                </div>
-                <div class="main-page__con">
-                    <div class="main-page__con--box">
-                        <a href="#">조건1</a>
-                        <a href="#">조건2</a>
-                        <a href="#">조건3</a>
-                        <a href="#">조건4</a>
-                    </div>
-                </div>
-                <!-- 
-                <div class="main-page__items">
-                    <div class="main-page__items--box">
-                    asdsa 
-    
-                    </div>
-                </div>-->
-            </div>
-        </div>
+        
         <br>
         <br>
         {% for post in posts %}
         <div style="border: solid 3px #ade3ca; border-radius: 8px; margin-left: 25px; margin-right: 25px; ">
             <div style="display: flex;">
-                <div style="margin-top: 18px; margin-left: 10px;"><img src="{{ post.photo.url }}" alt= "" style=" display: table-cell; width: 80px; height: 100px; vertical-align: middle;"></div>
+                <div style="margin-top: 18px; margin-left: 10px;"><img src="{{ post.photo.url }}" alt= "" style="border-radius: 10px; display: table-cell; width: 80px; height: 100px; vertical-align: middle;"></div>
                 <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;" >    <h6><a href="{% url 'detail_post' post.idx %}"> {{ post.title }}</a></h6>
                     <h6>가격: {{ post.price }}원</h6>    
                     <h7>판매자: {{ post.sellerIdx }}</h7><br>
@@ -62,9 +35,9 @@
 
                 <div class="col-lg-4" style="background-color: #e5fff3; ">
                     <a class="btn btn-social mx-1" href="{% url 'main' %}"><img class="img-fluid" src="../../static/assets/Vector.png" alt="..." /></a>
-                    <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png" alt="..." /></a>
+                    <a class="btn btn-social mx-1" href="{% url 'community' %}"><img class="img-fluid" src="../../static/assets/Building.png" alt="..." /></a>
                     <a class="btn btn-social mx-1" href="{% url 'create_post' %}"><img class="img-fluid" src="../../static/assets/Plus.png" alt="..." /></a>
-                    <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png" alt="..." /></a>
+                    <a class="btn btn-social mx-1" href="{% url 'my_chat_imbuyer' %}"><img class="img-fluid" src="../../static/assets/Chatdots.png" alt="..." /></a>
                     <a class="btn btn-social mx-1" href="{% url 'my_detail' %}"><img class="img-fluid" src="../../static/assets/Person.png" alt="..." /></a>
                 </div>
             </div>

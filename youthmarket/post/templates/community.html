@@ -8,40 +8,22 @@
             {% else %}
             <img src="http://127.0.0.1:8000/media/icons/user_default.PNG" style="width: 80px; height: 100px;">
             {% endif %} -->
-        <img src="{{ user.photo.url }}" style="width: 80px; height: 100px;">
-        안녕하세요 {{ user.userName }} 님!
-        (학교idx: {{ user.schoolIdx }})
+        <img src="{{ user.photo.url }}" style="border-radius: 10px; width: 80px; height: 100px;">
+        {{ user.userName }} 님
+        (소속: {{ user.schoolIdx }})
     </p>
-    <div id="app">
-        <div class="topIcon">
-            <img src="../../static/assets/smalllogo.png" alt="로고">
-        </div>
-        <div class="main-page">
-            <div class="main-page__input">
-                <!--<form>
-                        <input id="main--input" type="text">
-                        <button id="main--btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </form>-->
-            </div>
-            <!-- 
-                <div class="main-page__items">
-                    <div class="main-page__items--box">
-                    asdsa 
-    
-                    </div>
-                </div>-->
-        </div>
-    </div>
     <br>
     <br>
-    {% for com in communities %}
+    <div style="width: 150px; margin: 0 auto;"><a class="btn-primary btn" style="width: 150px; margin-top: 20px;" href="{% url 'create_community' %}">커뮤니티 작성</a></div>
+    {% for com in communities %} 
+    <br>
+    <br>
     <div style="border: solid 3px #ade3ca; border-radius: 8px; margin-left: 25px; margin-right: 25px; ">
         <div style="display: flex;">
-            
-            <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
-                <h6><a href="{% url 'detail_community' com.idx %}"> {{ com.title }}</a></h6>
-                <h7>{{ post.createdDate }}</h7><br>
-                <h7>방문: {{post.count}}</h7>
+            <div style="margin-top: 18px; margin-left: 10px;"><img src="{{ com.photo.url }}" alt= "" style="border-radius: 10px; display: table-cell; width: 80px; height: 100px; vertical-align: middle;"></div>
+                <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;" >    <h6><a href="{% url 'detail_community' com.idx  %}"> {{ com.title }}</a></h6>
+                <h7>{{ com.createdDate }}</h7><br>
+                <h7>방문 수: {{com.count}}</h7>
             </div>
         </div>
     </div>
@@ -56,11 +38,11 @@
             <div class="col-lg-4" style="background-color: #e5fff3; ">
                 <a class="btn btn-social mx-1" href="{% url 'main' %}"><img class="img-fluid"
                         src="../../static/assets/Vector.png" alt="..." /></a>
-                <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Building.png"
+                <a class="btn btn-social mx-1" href="{% url 'community' %}"><img class="img-fluid" src="../../static/assets/Building.png"
                         alt="..." /></a>
                 <a class="btn btn-social mx-1" href="{% url 'create_post' %}"><img class="img-fluid"
                         src="../../static/assets/Plus.png" alt="..." /></a>
-                <a class="btn btn-social mx-1" href="#!"><img class="img-fluid" src="../../static/assets/Chatdots.png"
+                <a class="btn btn-social mx-1" href="{% url 'my_chat_imbuyer' %}"><img class="img-fluid" src="../../static/assets/Chatdots.png"
                         alt="..." /></a>
                 <a class="btn btn-social mx-1" href="{% url 'my_detail' %}"><img class="img-fluid"
                         src="../../static/assets/Person.png" alt="..." /></a>
